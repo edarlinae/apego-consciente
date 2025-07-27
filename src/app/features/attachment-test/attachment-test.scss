@@ -1,0 +1,181 @@
+// Variables de color para un fácil mantenimiento
+$primary-text: #4a4a4a;
+$heading-text: #333;
+$accent-gradient: linear-gradient(90deg, #ff8c6c 0%, #f36ea0 100%);
+$card-background: rgba(255, 255, 255, 0.85);
+$card-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+$card-border: 1px solid rgba(255, 255, 255, 0.4);
+
+.test-container {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 3rem;
+  background: $card-background;
+  border-radius: 20px;
+  box-shadow: $card-shadow;
+  border: $card-border;
+  backdrop-filter: blur(12px); // Efecto "cristal esmerilado"
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.3s ease-in-out;
+}
+
+h1 {
+  // Título con la fuente serif elegante y un gradiente
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  background: $accent-gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitle {
+  text-align: center;
+  color: #777;
+  font-size: 1.1rem;
+  margin-bottom: 3.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.question-block {
+  margin-bottom: 2.5rem;
+}
+
+.question-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: $primary-text;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+// --- Rediseño completo de los botones de opción ---
+.options {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap; // Para que se adapte en pantallas pequeñas
+}
+
+.options label {
+  position: relative;
+  cursor: pointer;
+  
+  // Ocultamos el radio button original
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+  }
+
+  // Creamos nuestro propio "botón" visual
+  .option-ui {
+    padding: 0.8rem 1.2rem;
+    border-radius: 50px; // Píldoras redondeadas
+    background-color: #f7f7f7;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+    
+    span {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #888;
+    }
+  }
+
+  // Estilo al pasar el ratón por encima
+  &:hover .option-ui {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  // Estilo para la opción seleccionada
+  input:checked ~ .option-ui {
+    background: $accent-gradient;
+    border-color: transparent;
+    box-shadow: 0 6px 15px rgba(243, 110, 160, 0.3);
+    
+    span {
+      color: white;
+    }
+  }
+}
+
+// --- Rediseño del Botón de Envío ---
+.submit-btn {
+  display: block;
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1.1rem;
+  font-size: 1.2rem;
+  font-weight: 700; // Bold
+  color: #fff;
+  background: $accent-gradient;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(243, 110, 160, 0.25);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(243, 110, 160, 0.35);
+  }
+
+  &:disabled {
+    background: #e0e0e0;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: translateY(0);
+  }
+}
+
+// --- Rediseño de la Tarjeta de Resultado ---
+.result-container {
+  padding: 2rem;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    background: $accent-gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.15rem;
+    color: $primary-text;
+    line-height: 1.7;
+    max-width: 550px;
+    margin: 0 auto 2rem auto;
+  }
+}
+
+// Botón para repetir el test
+.retake-btn {
+  // Reutilizamos el estilo del botón principal
+  @extend .submit-btn; 
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

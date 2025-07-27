@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Playfair+Display:wght@700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Nunito Sans', sans-serif; // Establecemos la fuente base
+  background: linear-gradient(170deg, #fef5f2 0%, #fdeef2 100%); // Un gradiente sutil y cálido
+  background-attachment: fixed;
+}
+
+// Aquí podrías añadir más estilos globales si los necesitaras en el futuro.

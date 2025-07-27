@@ -1,0 +1,59 @@
+<div class="test-container">
+  <div *ngIf="!result">
+    <h1>Test de Estilo de Apego</h1>
+    <p class="subtitle">
+      Responde a las siguientes afirmaciones según cómo te identifiques con ellas en
+      tus relaciones de pareja.
+    </p>
+
+    <form [formGroup]="testForm" (ngSubmit)="onSubmit()">
+      <div *ngFor="let question of questions; let i = index" class="question-block">
+        <p class="question-text">{{ i + 1 }}. {{ question.text }}</p>
+        
+        <div class="options">
+          <label>
+            <input type="radio" [formControlName]="question.id" value="1" />
+            <div class="option-ui">
+              <span>Nada de acuerdo</span>
+            </div>
+          </label>
+          <label>
+            <input type="radio" [formControlName]="question.id" value="2" />
+            <div class="option-ui">
+              <span>Poco de acuerdo</span>
+            </div>
+          </label>
+          <label>
+            <input type="radio" [formControlName]="question.id" value="3" />
+            <div class="option-ui">
+              <span>Neutral</span>
+            </div>
+          </label>
+          <label>
+            <input type="radio" [formControlName]="question.id" value="4" />
+            <div class="option-ui">
+              <span>De acuerdo</span>
+            </div>
+          </label>
+          <label>
+            <input type="radio" [formControlName]="question.id" value="5" />
+            <div class="option-ui">
+              <span>Muy de acuerdo</span>
+            </div>
+          </label>
+        </div>
+
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="testForm.invalid">
+        Ver mis resultados
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="result" class="result-container">
+    <h2>Tu Estilo de Apego Principal es: <strong>{{ result.style }}</strong></h2>
+    <p>{{ result.description }}</p>
+    <button class="retake-btn" (click)="result = null; testForm.reset()">Realizar el test de nuevo</button>
+  </div>
+</div>
