@@ -1,63 +1,42 @@
-import { Routes } from '@angular/router';
-// Importamos nuestro "guardia" para proteger las rutas.
-// La ruta del archivo es con guion, como en tu estructura de carpetas.
-import { authGuard } from './core/guards/auth-guard';
+    import { Routes } from '@angular/router';
+    import { authGuard } from './core/guards/auth-guard';
+    import { HomeComponent } from './features/home/home'; // Importamos el nuevo componente
 
-export const routes: Routes = [
-  {
-    path: 'auth',
-    // Carga perezosa de las rutas de autenticación (login, register)
-    loadChildren: () => import('./features/auth/auth.routes').then(r => r.AUTH_ROUTES)
-  },
-  {
-    path: 'test-apego',
-    canActivate: [authGuard], // Esta ruta requiere que el usuario esté autenticado
-    loadComponent: () =>
-      import('./features/attachment-test/attachment-test').then(
-        (c) => c.AttachmentTestComponent
-      ),
-  },
-  {
-    path: 'perfil',
-    canActivate: [authGuard], // Esta ruta requiere que el usuario esté autenticado
-    loadComponent: () =>
-      import('./features/user-profile/user-profile').then(
-        (c) => c.UserProfileComponent
-      ),
-  },
-  {
-    path: 'diario',
-    canActivate: [authGuard], // Esta ruta requiere que el usuario esté autenticado
-    loadComponent: () =>
-      import('./features/daily-journal/daily-journal').then(
-        (c) => c.DailyJournalComponent
-      ),
-  },
-  {
-    path: 'recursos',
-    canActivate: [authGuard], // Esta ruta requiere que el usuario esté autenticado
-    loadComponent: () =>
-      import('./features/resources/resources').then(
-        (c) => c.ResourcesComponent
-      ),
-  },
-  {
-    path: 'ejercicios',
-    canActivate: [authGuard], // Esta ruta requiere que el usuario esté autenticado
-    loadComponent: () =>
-      import('./features/exercises/exercises').then(
-        (c) => c.ExercisesComponent
-      ),
-  },
-  {
-    // La ruta por defecto de la aplicación ahora es la página de login
-    path: '',
-    redirectTo: 'auth/login',
-    pathMatch: 'full',
-  },
-  {
-    // Ruta "catch-all" para redirigir cualquier URL no encontrada al login
-    path: '**',
-    redirectTo: 'auth/login'
-  }
-];
+    export const routes: Routes = [
+      // --- NUEVA RUTA PRINCIPAL ---
+      { path: 'home', component: HomeComponent },
+      {
+        path: 'auth',
+        loadChildren: () => import('./features/auth/auth.routes').then(r => r.AUTH_ROUTES)
+      },
+      {
+        path: 'test-apego',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./features/attachment-test/attachment-test').then(
+            (c) => c.AttachmentTestComponent
+          ),
+      },
+      // ... (el resto de tus rutas protegidas: perfil, diario, recursos, ejercicios)
+      {
+        path: 'ejercicios',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./features/exercises/exercises').then(
+            (c) => c.ExercisesComponent
+          ),
+      },
+      {
+        // --- REDIRECCIÓN POR DEFECTO ---
+        // Ahora la ruta vacía redirige a la nueva página de inicio
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
+      {
+        // El comodín ahora también redirige a la página de inicio
+        path: '**',
+        redirectTo: 'home'
+      }
+    ];
+    
