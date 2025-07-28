@@ -1,6 +1,6 @@
 <!--
   Cabecera principal de la aplicación.
-  Utiliza etiquetas semánticas como <header> y <nav> para una mejor estructura y accesibilidad.
+  Se mantiene fija en la parte superior de la página.
 -->
 <header class="main-header">
   <nav class="navbar">
@@ -9,28 +9,43 @@
       <a routerLink="/">ApegoConsciente</a>
     </div>
 
-    <!-- Enlaces de Navegación Centrales -->
-    <div class="navbar-links">
-      <!-- 
-        routerLinkActive="active-link" aplica la clase 'active-link' 
-        cuando la ruta del enlace está activa.
-      -->
+    <!-- 
+      Enlaces de Navegación Centrales.
+      Este bloque se muestra SOLAMENTE si hay un usuario con sesión iniciada.
+      'authService.currentUser()' devuelve el objeto de usuario o null.
+    -->
+    <div *ngIf="authService.currentUser()" class="navbar-links">
       <a routerLink="/test-apego" routerLinkActive="active-link">Test</a>
       <a routerLink="/diario" routerLinkActive="active-link">Diario</a>
-      <a routerLink="/ejercicios" routerLinkActive="active-link">Ejercicios</a>
       <a routerLink="/recursos" routerLinkActive="active-link">Recursos</a>
     </div>
 
-    <!-- Perfil del Usuario / Acciones a la derecha -->
+    <!-- Acciones de la barra de navegación (a la derecha) -->
     <div class="navbar-actions">
-      <a routerLink="/perfil" routerLinkActive="active-link" class="profile-link">Mi Perfil</a>
+      <!-- 
+        Este bloque se muestra si hay un usuario (authService.currentUser() no es nulo).
+        Muestra el enlace al perfil y el botón para cerrar sesión.
+      -->
+      <div *ngIf="authService.currentUser(); else loggedOut">
+        <a routerLink="/perfil" class="profile-link">Mi Perfil</a>
+        <button (click)="authService.logout()" class="logout-btn">Salir</button>
+      </div>
+
+      <!-- 
+        Este bloque (#loggedOut) se muestra si la condición del *ngIf de arriba es falsa
+        (es decir, no hay ningún usuario con sesión iniciada).
+      -->
+      <ng-template #loggedOut>
+        <a routerLink="/auth/login" class="auth-link">Iniciar Sesión</a>
+        <a routerLink="/auth/register" class="profile-link">Crear Cuenta</a>
+      </ng-template>
     </div>
   </nav>
 </header>
 
 <!-- 
   El <main> contiene el <router-outlet>, que es donde Angular renderizará 
-  el componente correspondiente a la ruta activa.
+  el componente correspondiente a la ruta activa (Login, Test, Diario, etc.).
 -->
 <main class="content">
   <router-outlet></router-outlet>

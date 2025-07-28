@@ -7,10 +7,9 @@ import { RouterLink } from '@angular/router';
   selector: 'app-user-profile',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './user-profile.html', // SIN .component
-  styleUrl: './user-profile.scss'    // SIN .component
+  templateUrl: './user-profile.html',
+  styleUrl: './user-profile.scss'
 })
 export class UserProfileComponent {
-  // Usamos 'inject' como una forma moderna de inyectar servicios.
   public userService = inject(UserService);
 }

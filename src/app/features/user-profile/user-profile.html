@@ -1,25 +1,29 @@
-<p>user-profile works!</p>
 <div class="profile-container">
-  <div class="profile-header">
-    <h1>Perfil de {{ userService.currentUser() }}</h1>
-    <p>Aquí puedes ver un resumen de tu progreso y resultados.</p>
-  </div>
-
-  <div class="profile-card">
-    <h2>Resultado del Test de Apego</h2>
-    
-    <div *ngIf="userService.hasCompletedTest(); else noTest">
-      <div class="result-display">
-        <h3 class="result-style">{{ userService.testResult()?.style }}</h3>
-        <p class="result-description">{{ userService.testResult()?.description }}</p>
-      </div>
+  <!-- Esperamos a que el perfil se cargue desde Firestore -->
+  <div *ngIf="userService.profile() as userProfile">
+    <div class="profile-header">
+      <h1>Perfil de {{ userProfile.name }}</h1>
+      <p>{{ userProfile.email }}</p>
     </div>
 
-    <ng-template #noTest>
-      <div class="no-result">
-        <p>Aún no has completado el test de estilo de apego.</p>
-        <a routerLink="/test-apego" class="action-button">Hacer el test ahora</a>
+    <div class="profile-card">
+      <h2>Resultado del Test de Apego</h2>
+      
+      <!-- Mostramos el resultado si existe en el perfil -->
+      <div *ngIf="userProfile.testResult; else noTest">
+        <div class="result-display">
+          <h3 class="result-style">{{ userProfile.testResult.style }}</h3>
+          <p class="result-description">{{ userProfile.testResult.description }}</p>
+        </div>
       </div>
-    </ng-template>
+
+      <!-- Mensaje si no se ha hecho el test -->
+      <ng-template #noTest>
+        <div class="no-result">
+          <p>Aún no has completado el test de estilo de apego.</p>
+          <a routerLink="/test-apego" class="action-button">Hacer el test ahora</a>
+        </div>
+      </ng-template>
+    </div>
   </div>
 </div>

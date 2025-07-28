@@ -12,15 +12,12 @@ import { AuthService } from '../../../core/services/auth';
   styleUrl: './login.scss'
 })
 export class LoginComponent {
-  // Inyectamos los servicios necesarios
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  // Variable para mostrar mensajes de error
   errorMessage: string | null = null;
 
-  // Definición del formulario de login
   loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]]
@@ -30,12 +27,21 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value)
         .then(() => {
-          // Si el login es exitoso, navegamos al perfil
           this.router.navigate(['/perfil']);
         })
         .catch(error => {
-          // Si hay un error, mostramos un mensaje al usuario
-          this.errorMessage = 'El correo electrónico o la contraseña son incorrectos.';
+          // --- LÓGICA DE ERROR MEJORADA ---
+          // Comprobamos el código de error que nos devuelve Firebase
+          switch (error.code) {
+            case 'auth/user-not-found':
+            case 'auth/wrong-password':
+            case 'auth/invalid-credential':
+              this.errorMessage = 'El correo electrónico o la contraseña son incorrectos.';
+              break;
+            default:
+              this.errorMessage = 'Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo.';
+              break;
+          }
           console.error('Error de login:', error);
         });
     }

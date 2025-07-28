@@ -1,0 +1,49 @@
+<div class="resources-container">
+  <div class="resources-header">
+    <h1>Mis Recursos</h1>
+    <p>Identifica tus patrones y descubre estrategias para cultivar un apego más seguro.</p>
+  </div>
+
+  <div *ngIf="!userAttachmentStyle(); else hasStyle">
+    <div class="placeholder-card">
+      <h2>Completa el test primero</h2>
+      <p>Para acceder a tus recursos personalizados, primero necesitamos conocer tu estilo de apego.</p>
+      <a routerLink="/test-apego" class="action-button">Hacer el Test de Apego</a>
+    </div>
+  </div>
+
+  <ng-template #hasStyle>
+    <div class="section-card">
+      <h2>Identifico estas conductas en mí...</h2>
+      <p class="section-subtitle">Marca aquellas con las que te sientas más identificado/a. El consejo asociado aparecerá justo debajo.</p>
+      
+      <div class="conducts-list">
+        <!-- Iteramos sobre la nueva estructura que combina conductas y tips -->
+        <div *ngFor="let item of conductsWithTips()" class="conduct-item-wrapper">
+          <div class="conduct-item">
+            <label>
+              <input 
+                type="checkbox" 
+                [checked]="selectedConductIds().has(item.conduct.id)"
+                (change)="onConductChange(item.conduct.id, $any($event.target).checked)">
+              <span class="custom-checkbox"></span>
+              <span class="conduct-text">{{ item.conduct.text }}</span>
+            </label>
+          </div>
+
+          <!-- 
+            Contenedor del tip. Se muestra con una animación si la conducta está seleccionada.
+            La clase 'visible' activa la transición en el SCSS.
+          -->
+          <div 
+            class="tip-reveal-container" 
+            [class.visible]="selectedConductIds().has(item.conduct.id)">
+            <div *ngIf="item.tip" class="tip-item">
+              <p>{{ item.tip.text }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
