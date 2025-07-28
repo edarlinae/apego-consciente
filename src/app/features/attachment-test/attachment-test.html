@@ -1,4 +1,5 @@
 <div class="test-container">
+  <!-- Ocultamos el formulario si ya hay un resultado -->
   <div *ngIf="!result">
     <h1>Test de Estilo de Apego</h1>
     <p class="subtitle">
@@ -51,9 +52,11 @@
     </form>
   </div>
 
+  <!-- SECCIÓN DE RESULTADOS -->
   <div *ngIf="result" class="result-container">
     <h2>Tu Estilo de Apego Principal es: <strong>{{ result.style }}</strong></h2>
-    <p>{{ result.description }}</p>
+    <!-- LÍNEA CORREGIDA: Cambiamos 'description' por 'summary' -->
+    <p>{{ result.summary }}</p>
     <button class="retake-btn" (click)="result = null; testForm.reset()">Realizar el test de nuevo</button>
   </div>
 </div>
