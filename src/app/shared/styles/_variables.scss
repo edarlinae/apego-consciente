@@ -1,0 +1,13 @@
+// Archivo central para las variables de diseño reutilizables.
+// Al centralizar estas variables, aseguramos una estética consistente
+// en toda la aplicación y facilitamos futuros cambios de diseño.
+
+// Paleta de colores y texto
+$primary-text: #4a4a4a;
+$heading-text: #333;
+$accent-gradient: linear-gradient(90deg, #ff8c6c 0%, #f36ea0 100%);
+
+// Estilos para las tarjetas (cards)
+$card-background: rgba(255, 255, 255, 0.85);
+$card-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+$card-border: 1px solid rgba(255, 255, 255, 0.4);

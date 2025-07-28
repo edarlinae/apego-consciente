@@ -1,24 +1,42 @@
+<!--
+  Cabecera principal de la aplicación.
+  Utiliza etiquetas semánticas como <header> y <nav> para una mejor estructura y accesibilidad.
+-->
 <header class="main-header">
   <nav class="navbar">
+    <!-- Logotipo / Marca de la aplicación -->
     <div class="navbar-brand">
       <a routerLink="/">ApegoConsciente</a>
     </div>
-    <ul class="navbar-links">
-      <li><a routerLink="/test-apego">Test de Apego</a></li>
-      <li><a routerLink="/diario">Diario</a></li>
-      <li><a routerLink="/ejercicios">Ejercicios</a></li>
-      <li><a routerLink="/recursos">Recursos</a></li>
-    </ul>
-    <div class="navbar-profile">
-      <a routerLink="/perfil">Mi Perfil</a>
+
+    <!-- Enlaces de Navegación Centrales -->
+    <div class="navbar-links">
+      <!-- 
+        routerLinkActive="active-link" aplica la clase 'active-link' 
+        cuando la ruta del enlace está activa.
+      -->
+      <a routerLink="/test-apego" routerLinkActive="active-link">Test</a>
+      <a routerLink="/diario" routerLinkActive="active-link">Diario</a>
+      <a routerLink="/ejercicios" routerLinkActive="active-link">Ejercicios</a>
+      <a routerLink="/recursos" routerLinkActive="active-link">Recursos</a>
+    </div>
+
+    <!-- Perfil del Usuario / Acciones a la derecha -->
+    <div class="navbar-actions">
+      <a routerLink="/perfil" routerLinkActive="active-link" class="profile-link">Mi Perfil</a>
     </div>
   </nav>
 </header>
 
+<!-- 
+  El <main> contiene el <router-outlet>, que es donde Angular renderizará 
+  el componente correspondiente a la ruta activa.
+-->
 <main class="content">
   <router-outlet></router-outlet>
 </main>
 
+<!-- Pie de página -->
 <footer class="main-footer">
   <p>&copy; 2025 ApegoConsciente. Todos los derechos reservados.</p>
 </footer>

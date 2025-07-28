@@ -1,0 +1,141 @@
+// Corregido: Usamos la ruta simplificada que busca a partir de 'src/app/shared'
+@use 'styles/variables' as *;
+
+// --- Estilos Base Reutilizables para esta sección ---
+.journal-btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  color: white;
+  background: $accent-gradient;
+  box-shadow: 0 6px 15px rgba(243, 110, 160, 0.3);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(243, 110, 160, 0.4);
+  }
+}
+
+// ... (el resto del código es idéntico)
+.journal-container {
+  max-width: 900px;
+  margin: 2rem auto;
+}
+
+.journal-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: #333;
+  }
+  p {
+    font-size: 1.1rem;
+    color: #777;
+    margin-top: -0.5rem;
+  }
+}
+
+.add-entry-btn {
+  @extend .journal-btn;
+  margin-top: 1.5rem;
+}
+
+.form-container {
+  background: $card-background;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: $card-shadow;
+  margin-bottom: 3rem;
+}
+
+.form-field {
+  margin-bottom: 1.5rem;
+  label {
+    display: block;
+    font-weight: 600;
+    color: $primary-text;
+    margin-bottom: 0.5rem;
+  }
+  input, select, textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 1rem;
+    &:focus {
+      outline: none;
+      border-color: #f36ea0;
+      box-shadow: 0 0 0 3px rgba(243, 110, 160, 0.2);
+    }
+  }
+}
+
+.submit-btn {
+  @extend .journal-btn;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  
+  &:disabled {
+    background: #e0e0e0;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: translateY(0);
+  }
+}
+
+.entries-list {
+  margin-top: 2rem;
+}
+
+.entry-card {
+  background: #fff;
+  border-radius: 15px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: $card-shadow;
+  transition: all 0.3s ease;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.entry-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  h3 { margin: 0; font-size: 1.4rem; color: $primary-text; }
+  .entry-date { font-size: 0.85rem; color: #999; }
+}
+
+.entry-card-body p { line-height: 1.7; color: #666; white-space: pre-wrap; }
+
+.entry-card-footer {
+  margin-top: 1.5rem;
+  .emotion-tag { 
+    @extend .journal-btn; 
+    padding: 0.4rem 0.8rem; 
+    font-size: 0.8rem; 
+  }
+}
+
+.no-entries-placeholder {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  p { font-size: 1.2rem; font-weight: 600; color: #555; }
+  span { color: #777; }
+}

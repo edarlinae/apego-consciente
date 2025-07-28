@@ -1,0 +1,3 @@
+// Este archivo ahora delega todos sus estilos al archivo maestro _auth.scss
+// La ruta es relativa a su propia ubicación.
+@use '../auth';

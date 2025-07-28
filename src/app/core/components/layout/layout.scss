@@ -1,0 +1,140 @@
+// Variables de diseño para mantener la coherencia y facilitar cambios futuros.
+$primary-text: #4a4a4a;
+$accent-gradient: linear-gradient(90deg, #ff8c6c 0%, #f36ea0 100%);
+$header-height: 80px; // Altura de la barra de navegación
+
+// Estilo para el componente anfitrión (app-layout)
+:host {
+  display: block;
+  // Creamos un espacio en la parte superior del cuerpo de la página
+  // para evitar que el contenido inicial quede oculto debajo de la cabecera fija.
+  padding-top: $header-height;
+}
+
+.main-header {
+  // --- Estilo de la Cabecera Fija con Efecto Cristal (Glassmorphism) ---
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $header-height;
+  z-index: 1000;
+
+  // Fondo semitransparente que permite ver el contenido de debajo.
+  background: rgba(255, 255, 255, 0.7);
+
+  // El efecto de desenfoque que define el "glassmorphism".
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); // Para compatibilidad con Safari
+
+  // Un borde y sombra sutiles para dar profundidad y definir los límites.
+  border-bottom: 1px solid rgba(230, 230, 230, 0.5);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+}
+
+.navbar {
+  // --- Disposición de los elementos dentro de la barra ---
+  display: flex;
+  justify-content: space-between; // Reparte el espacio entre los 3 bloques
+  align-items: center; // Centra verticalmente los elementos
+  height: 100%;
+  max-width: 1200px; // Ancho máximo para pantallas grandes
+  margin: 0 auto; // Centra la barra en el viewport
+  padding: 0 2rem; // Espaciado lateral
+}
+
+// --- Estilos para el Logotipo ---
+.navbar-brand a {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  // Aplicamos el gradiente de acento al texto
+  background: $accent-gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+// --- Estilos para los Enlaces Centrales ---
+.navbar-links {
+  display: flex;
+  gap: 2.5rem; // Espacio entre los enlaces
+
+  a {
+    position: relative; // Necesario para el pseudo-elemento ::after
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: $primary-text;
+    padding: 0.5rem 0;
+    transition: color 0.3s ease;
+
+    // Subrayado animado que aparece al pasar el ratón
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: $accent-gradient;
+      transform: scaleX(0); // Oculto por defecto
+      transform-origin: center;
+      transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    &:hover {
+      color: #333;
+    }
+
+    &:hover::after {
+      transform: scaleX(1); // Se muestra al hacer hover
+    }
+  }
+}
+
+// --- Estilos para el Botón de Perfil ---
+.navbar-actions .profile-link {
+  text-decoration: none;
+  font-weight: 600;
+  color: white;
+  background: $accent-gradient;
+  padding: 0.7rem 1.2rem;
+  border-radius: 50px; // Estilo de píldora
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(243, 110, 160, 0.2);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(243, 110, 160, 0.3);
+  }
+}
+
+// --- Estilo que se aplica al enlace de la página activa ---
+.active-link {
+  color: #111 !important; // Un color más oscuro para destacar
+
+  // Muestra permanentemente el subrayado
+  &::after {
+    transform: scaleX(1) !important;
+  }
+}
+
+// --- Estilos del contenido principal y el pie de página ---
+// (Estos no necesitan cambios drásticos, pero los mantenemos por completitud)
+.content {
+  flex: 1;
+  padding: 2rem;
+  // El fondo general de la página ya está en styles.scss
+}
+
+.main-footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: auto;
+}

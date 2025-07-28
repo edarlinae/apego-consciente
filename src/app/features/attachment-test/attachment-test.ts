@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AttachmentStyleService, TestResult } from '../../core/services/attachment-style';
+import { UserService } from '../../core/services/user';
 
 interface Question {
   id: string;
@@ -17,8 +18,6 @@ interface Question {
 })
 export class AttachmentTestComponent implements OnInit {
   testForm!: FormGroup;
-  
-  // Array de preguntas actualizado a 11
   questions: Question[] = [
     { id: 'q1', text: 'Me resulta relativamente fácil acercarme a los demás y sentirme cómodo/a dependiendo de ellos.' },
     { id: 'q2', text: 'Me preocupa que mi pareja no me quiera de verdad o no desee permanecer a mi lado.' },
@@ -32,12 +31,12 @@ export class AttachmentTestComponent implements OnInit {
     { id: 'q10', text: 'Si no recibo noticias de mi pareja, tiendo a pensar que algo malo ha sucedido o que está enfadada conmigo.' },
     { id: 'q11', text: 'Resolver los desacuerdos con mi pareja no suele ser un gran problema para mí.' }
   ];
-
   result: TestResult | null = null;
 
   constructor(
     private fb: FormBuilder,
-    private attachmentStyleService: AttachmentStyleService
+    private attachmentStyleService: AttachmentStyleService,
+    private userService: UserService // Inyectamos el servicio de usuario
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +50,8 @@ export class AttachmentTestComponent implements OnInit {
   onSubmit(): void {
     if (this.testForm.valid) {
       this.result = this.attachmentStyleService.calculateResult(this.testForm.value);
+      // Guardamos el resultado en el estado global a través del servicio
+      this.userService.setTestResult(this.result);
     } else {
       console.log('El formulario no es válido');
     }
