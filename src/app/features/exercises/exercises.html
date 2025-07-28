@@ -1,0 +1,51 @@
+    <div class="exercises-container">
+      <!-- Se muestra si el usuario no ha completado su propio test -->
+      <div *ngIf="!userStyle(); else hasUserStyle">
+        <div class="placeholder-card">
+          <h2>Primero, necesitamos conocerte a ti</h2>
+          <p>Para poder sugerirte ejercicios, completa tu test de apego personal.</p>
+          <a routerLink="/test-apego" class="action-button">Hacer mi Test</a>
+        </div>
+      </div>
+
+      <ng-template #hasUserStyle>
+        <!-- Se muestra si el usuario ya tiene su estilo, pero no ha seleccionado el de su pareja -->
+        <div *ngIf="!partnerStyle(); else showExercises">
+          <div class="selection-container">
+            <h1>¿Cuál es el estilo de apego principal de tu pareja?</h1>
+            <p class="subtitle">Selecciona el estilo que mejor describa a tu pareja para obtener ejercicios personalizados para vuestra dinámica.</p>
+            <div class="style-options">
+              <button *ngFor="let style of attachmentStyles" (click)="selectPartnerStyle(style)" class="style-button">
+                {{ style }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Se muestra la lista de ejercicios una vez seleccionados ambos estilos -->
+        <ng-template #showExercises>
+          <div class="exercises-list-container">
+            <div class="exercises-header">
+              <h1>Ejercicios para <span class="highlight">{{ userStyle() }}</span> y <span class="highlight">{{ partnerStyle() }}</span></h1>
+              <p>Aquí tenéis algunas prácticas para fortalecer vuestro vínculo y navegar los desafíos juntos.</p>
+              <button class="change-btn" (click)="partnerStyle.set(null)">Cambiar estilo de pareja</button>
+            </div>
+            
+            <div class="exercises-grid">
+              <div *ngFor="let exercise of coupleExercises()" class="exercise-card">
+                <div class="exercise-icon">{{ exercise.icon }}</div>
+                <h2>{{ exercise.title }}</h2>
+                <p class="description">{{ exercise.description }}</p>
+                <div class="steps">
+                  <h4>Pasos a seguir:</h4>
+                  <ul>
+                    <li *ngFor="let step of exercise.steps">{{ step }}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ng-template>
+    </div>
+    

@@ -1,15 +1,17 @@
 import { Routes } from '@angular/router';
-// Asegúrate de que la ruta al guard es correcta (con guion)
+// Importamos nuestro "guardia" para proteger las rutas.
+// La ruta del archivo es con guion, como en tu estructura de carpetas.
 import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
   {
     path: 'auth',
+    // Carga perezosa de las rutas de autenticación (login, register)
     loadChildren: () => import('./features/auth/auth.routes').then(r => r.AUTH_ROUTES)
   },
   {
     path: 'test-apego',
-    canActivate: [authGuard], // Ruta protegida
+    canActivate: [authGuard], // Esta ruta requiere que el usuario esté autenticado
     loadComponent: () =>
       import('./features/attachment-test/attachment-test').then(
         (c) => c.AttachmentTestComponent
@@ -17,7 +19,7 @@ export const routes: Routes = [
   },
   {
     path: 'perfil',
-    canActivate: [authGuard], // Ruta protegida
+    canActivate: [authGuard], // Esta ruta requiere que el usuario esté autenticado
     loadComponent: () =>
       import('./features/user-profile/user-profile').then(
         (c) => c.UserProfileComponent
@@ -25,19 +27,26 @@ export const routes: Routes = [
   },
   {
     path: 'diario',
-    canActivate: [authGuard], // Ruta protegida
+    canActivate: [authGuard], // Esta ruta requiere que el usuario esté autenticado
     loadComponent: () =>
       import('./features/daily-journal/daily-journal').then(
         (c) => c.DailyJournalComponent
       ),
   },
   {
-    // --- RUTA DE RECURSOS (AÑADIDA Y CORREGIDA) ---
     path: 'recursos',
-    canActivate: [authGuard], // Protegida, solo para usuarios logueados
+    canActivate: [authGuard], // Esta ruta requiere que el usuario esté autenticado
     loadComponent: () =>
       import('./features/resources/resources').then(
         (c) => c.ResourcesComponent
+      ),
+  },
+  {
+    path: 'ejercicios',
+    canActivate: [authGuard], // Esta ruta requiere que el usuario esté autenticado
+    loadComponent: () =>
+      import('./features/exercises/exercises').then(
+        (c) => c.ExercisesComponent
       ),
   },
   {
