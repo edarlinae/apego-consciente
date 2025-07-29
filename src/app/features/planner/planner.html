@@ -1,131 +1,144 @@
-    <div class="planner-container">
-      <div class="planner-header">
-        <h1>Mi Planificador</h1>
-        <p>Organiza tus intenciones, conversaciones y actividades para construir una relación más consciente.</p>
+<div class="planner-container">
+  <div class="planner-header">
+    <h1>Mi Planificador</h1>
+    <p>Organiza tus intenciones, conversaciones y actividades para construir una relación más consciente.</p>
+  </div>
+
+  <div class="planner-board">
+    <!-- Columna 1: Tareas Personales -->
+    <div class="planner-column">
+      <div class="column-header personal">
+        <h3>🌱 Crecimiento Personal</h3>
       </div>
-
-      <div class="planner-board">
-        <!-- Columna 1: Tareas Personales -->
-        <div class="planner-column">
-          <div class="column-header personal">
-            <h3>🌱 Crecimiento Personal</h3>
-          </div>
-          <div class="notes-list">
-            <div *ngFor="let note of personalTasks()" class="note-card" [class.completed]="note.isCompleted">
-              <!-- Vista de la nota -->
-              <ng-container *ngIf="editingNoteId() !== note.id; else editMode">
-                <div class="note-content">
-                  <input type="checkbox" [checked]="note.isCompleted" (change)="toggleCompletion(note)">
-                  <span class="note-text">{{ note.text }}</span>
-                </div>
-                <div class="note-actions">
-                  <button (click)="startEditing(note)">✏️</button>
-                  <button (click)="deleteNote(note.id)">🗑️</button>
-                </div>
-              </ng-container>
-              <!-- Modo Edición -->
-              <ng-template #editMode>
-                <div class="edit-form">
-                  <input type="text" [formControl]="editingText" (keyup.enter)="saveNote(note.id)" (keyup.escape)="cancelEditing()">
-                  <button (click)="saveNote(note.id)">Guardar</button>
-                </div>
-              </ng-template>
+      <div class="notes-list">
+        <div *ngFor="let note of personalTasks()" class="note-card" [class.completed]="note.isCompleted">
+          <ng-container *ngIf="editingNoteId() !== note.id; else editMode">
+            <div class="note-content">
+              <!-- MODIFICADO: Nueva estructura para el checkbox personalizado -->
+              <label class="checkbox-wrapper">
+                <input type="checkbox" [checked]="note.isCompleted" (change)="toggleCompletion(note)">
+                <span class="custom-checkbox"></span>
+              </label>
+              <span class="note-text">{{ note.text }}</span>
             </div>
-          </div>
-          <div class="add-note-form">
-            <input type="text" [formControl]="newNoteForms.personal" placeholder="+ Añadir tarea personal" (keyup.enter)="addNote('personal')">
-          </div>
-        </div>
-
-        <!-- Columna 2: Conversaciones Pendientes -->
-        <div class="planner-column">
-          <div class="column-header conversations">
-            <h3>💬 Conversaciones</h3>
-          </div>
-          <div class="notes-list">
-            <div *ngFor="let note of conversations()" class="note-card" [class.completed]="note.isCompleted">
-              <ng-container *ngIf="editingNoteId() !== note.id; else editMode">
-                <div class="note-content">
-                  <input type="checkbox" [checked]="note.isCompleted" (change)="toggleCompletion(note)">
-                  <span class="note-text">{{ note.text }}</span>
-                </div>
-                <div class="note-actions">
-                  <button (click)="startEditing(note)">✏️</button>
-                  <button (click)="deleteNote(note.id)">🗑️</button>
-                </div>
-              </ng-container>
-              <ng-template #editMode>
-                <div class="edit-form">
-                  <input type="text" [formControl]="editingText" (keyup.enter)="saveNote(note.id)" (keyup.escape)="cancelEditing()">
-                  <button (click)="saveNote(note.id)">Guardar</button>
-                </div>
-              </ng-template>
+            <div class="note-actions">
+              <button (click)="startEditing(note)">✏️</button>
+              <button (click)="deleteNote(note.id)">🗑️</button>
             </div>
-          </div>
-          <div class="add-note-form">
-            <input type="text" [formControl]="newNoteForms.conversations" placeholder="+ Añadir conversación" (keyup.enter)="addNote('conversations')">
-          </div>
-        </div>
-
-        <!-- Columna 3: Ocio en Pareja -->
-        <div class="planner-column">
-          <div class="column-header coupleFun">
-            <h3>🎈 Ocio en Pareja</h3>
-          </div>
-          <div class="notes-list">
-            <div *ngFor="let note of coupleFun()" class="note-card" [class.completed]="note.isCompleted">
-              <ng-container *ngIf="editingNoteId() !== note.id; else editMode">
-                <div class="note-content">
-                  <input type="checkbox" [checked]="note.isCompleted" (change)="toggleCompletion(note)">
-                  <span class="note-text">{{ note.text }}</span>
-                </div>
-                <div class="note-actions">
-                  <button (click)="startEditing(note)">✏️</button>
-                  <button (click)="deleteNote(note.id)">🗑️</button>
-                </div>
-              </ng-container>
-              <ng-template #editMode>
-                <div class="edit-form">
-                  <input type="text" [formControl]="editingText" (keyup.enter)="saveNote(note.id)" (keyup.escape)="cancelEditing()">
-                  <button (click)="saveNote(note.id)">Guardar</button>
-                </div>
-              </ng-template>
+          </ng-container>
+          <ng-template #editMode>
+            <div class="edit-form">
+              <input type="text" [formControl]="editingText" (keyup.enter)="saveNote(note.id)" (keyup.escape)="cancelEditing()">
+              <button (click)="saveNote(note.id)">Guardar</button>
             </div>
-          </div>
-          <div class="add-note-form">
-            <input type="text" [formControl]="newNoteForms.coupleFun" placeholder="+ Añadir actividad" (keyup.enter)="addNote('coupleFun')">
-          </div>
+          </ng-template>
         </div>
-
-        <!-- Columna 4: Terapia/Ejercicios -->
-        <div class="planner-column">
-          <div class="column-header coupleWork">
-            <h3>💪 Trabajo en Equipo</h3>
-          </div>
-          <div class="notes-list">
-            <div *ngFor="let note of coupleWork()" class="note-card" [class.completed]="note.isCompleted">
-              <ng-container *ngIf="editingNoteId() !== note.id; else editMode">
-                <div class="note-content">
-                  <input type="checkbox" [checked]="note.isCompleted" (change)="toggleCompletion(note)">
-                  <span class="note-text">{{ note.text }}</span>
-                </div>
-                <div class="note-actions">
-                  <button (click)="startEditing(note)">✏️</button>
-                  <button (click)="deleteNote(note.id)">🗑️</button>
-                </div>
-              </ng-container>
-              <ng-template #editMode>
-                <div class="edit-form">
-                  <input type="text" [formControl]="editingText" (keyup.enter)="saveNote(note.id)" (keyup.escape)="cancelEditing()">
-                  <button (click)="saveNote(note.id)">Guardar</button>
-                </div>
-              </ng-template>
-            </div>
-          </div>
-          <div class="add-note-form">
-            <input type="text" [formControl]="newNoteForms.coupleWork" placeholder="+ Añadir ejercicio" (keyup.enter)="addNote('coupleWork')">
-          </div>
-        </div>
+      </div>
+      <div class="add-note-form">
+        <input type="text" [formControl]="newNoteForms.personal" placeholder="+ Añadir tarea personal" (keyup.enter)="addNote('personal')">
       </div>
     </div>
-    
+
+    <!-- Columna 2: Conversaciones Pendientes -->
+    <div class="planner-column">
+      <div class="column-header conversations">
+        <h3>💬 Conversaciones</h3>
+      </div>
+      <div class="notes-list">
+        <div *ngFor="let note of conversations()" class="note-card" [class.completed]="note.isCompleted">
+          <ng-container *ngIf="editingNoteId() !== note.id; else editMode">
+            <div class="note-content">
+              <!-- MODIFICADO: Nueva estructura para el checkbox personalizado -->
+              <label class="checkbox-wrapper">
+                <input type="checkbox" [checked]="note.isCompleted" (change)="toggleCompletion(note)">
+                <span class="custom-checkbox"></span>
+              </label>
+              <span class="note-text">{{ note.text }}</span>
+            </div>
+            <div class="note-actions">
+              <button (click)="startEditing(note)">✏️</button>
+              <button (click)="deleteNote(note.id)">🗑️</button>
+            </div>
+          </ng-container>
+          <ng-template #editMode>
+            <div class="edit-form">
+              <input type="text" [formControl]="editingText" (keyup.enter)="saveNote(note.id)" (keyup.escape)="cancelEditing()">
+              <button (click)="saveNote(note.id)">Guardar</button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="add-note-form">
+        <input type="text" [formControl]="newNoteForms.conversations" placeholder="+ Añadir conversación" (keyup.enter)="addNote('conversations')">
+      </div>
+    </div>
+
+    <!-- Columna 3: Ocio en Pareja -->
+    <div class="planner-column">
+      <div class="column-header coupleFun">
+        <h3>🎈 Ocio en Pareja</h3>
+      </div>
+      <div class="notes-list">
+        <div *ngFor="let note of coupleFun()" class="note-card" [class.completed]="note.isCompleted">
+          <ng-container *ngIf="editingNoteId() !== note.id; else editMode">
+            <div class="note-content">
+              <!-- MODIFICADO: Nueva estructura para el checkbox personalizado -->
+              <label class="checkbox-wrapper">
+                <input type="checkbox" [checked]="note.isCompleted" (change)="toggleCompletion(note)">
+                <span class="custom-checkbox"></span>
+              </label>
+              <span class="note-text">{{ note.text }}</span>
+            </div>
+            <div class="note-actions">
+              <button (click)="startEditing(note)">✏️</button>
+              <button (click)="deleteNote(note.id)">🗑️</button>
+            </div>
+          </ng-container>
+          <ng-template #editMode>
+            <div class="edit-form">
+              <input type="text" [formControl]="editingText" (keyup.enter)="saveNote(note.id)" (keyup.escape)="cancelEditing()">
+              <button (click)="saveNote(note.id)">Guardar</button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="add-note-form">
+        <input type="text" [formControl]="newNoteForms.coupleFun" placeholder="+ Añadir actividad" (keyup.enter)="addNote('coupleFun')">
+      </div>
+    </div>
+
+    <!-- Columna 4: Terapia/Ejercicios -->
+    <div class="planner-column">
+      <div class="column-header coupleWork">
+        <h3>💪 Trabajo en Equipo</h3>
+      </div>
+      <div class="notes-list">
+        <div *ngFor="let note of coupleWork()" class="note-card" [class.completed]="note.isCompleted">
+          <ng-container *ngIf="editingNoteId() !== note.id; else editMode">
+            <div class="note-content">
+              <!-- MODIFICADO: Nueva estructura para el checkbox personalizado -->
+              <label class="checkbox-wrapper">
+                <input type="checkbox" [checked]="note.isCompleted" (change)="toggleCompletion(note)">
+                <span class="custom-checkbox"></span>
+              </label>
+              <span class="note-text">{{ note.text }}</span>
+            </div>
+            <div class="note-actions">
+              <button (click)="startEditing(note)">✏️</button>
+              <button (click)="deleteNote(note.id)">🗑️</button>
+            </div>
+          </ng-container>
+          <ng-template #editMode>
+            <div class="edit-form">
+              <input type="text" [formControl]="editingText" (keyup.enter)="saveNote(note.id)" (keyup.escape)="cancelEditing()">
+              <button (click)="saveNote(note.id)">Guardar</button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="add-note-form">
+        <input type="text" [formControl]="newNoteForms.coupleWork" placeholder="+ Añadir ejercicio" (keyup.enter)="addNote('coupleWork')">
+      </div>
+    </div>
+  </div>
+</div>
