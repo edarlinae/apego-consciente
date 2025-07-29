@@ -1,18 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Exercises } from './exercises';
+// Asegúrate de que el nombre del componente importado sea el correcto
+import { ExercisesComponent } from './exercises';
 
-describe('Exercises', () => {
-  let component: Exercises;
-  let fixture: ComponentFixture<Exercises>;
+describe('ExercisesComponent', () => {
+  let component: ExercisesComponent;
+  let fixture: ComponentFixture<ExercisesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Exercises]
+      imports: [ExercisesComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Exercises);
+    fixture = TestBed.createComponent(ExercisesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

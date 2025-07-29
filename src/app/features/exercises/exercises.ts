@@ -1,46 +1,51 @@
-    import { Component, computed, inject, signal } from '@angular/core';
-    import { CommonModule } from '@angular/common';
-    import { UserService } from '../../core/services/user';
-    import { ExercisesService, Exercise } from '../../core/services/exercises';
-    import { RouterLink } from '@angular/router';
+import { Component, computed, inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { UserService } from '../../core/services/user';
+// Importamos el nuevo servicio y la interfaz
+import { ExercisesService, Exercise } from '../../core/services/exercises.service';
+import { RouterLink } from '@angular/router';
 
-    @Component({
-      selector: 'app-exercises',
-      standalone: true,
-      imports: [CommonModule, RouterLink],
-      templateUrl: './exercises.html',
-      styleUrl: './exercises.scss'
-    })
-    export class ExercisesComponent {
-      public userService = inject(UserService);
-      private exercisesService = inject(ExercisesService);
+// Definimos el tipo aquí para usarlo en el componente
+type AttachmentStyle = 'Seguro' | 'Ansioso' | 'Evitativo' | 'Desorganizado';
 
-      // Tipos de apego disponibles para la selección
-      attachmentStyles = ['Seguro', 'Ansioso', 'Evitativo'];
+@Component({
+  selector: 'app-exercises',
+  standalone: true,
+  imports: [CommonModule, RouterLink],
+  templateUrl: './exercises.html',
+  styleUrls: ['./exercises.scss']
+})
+export class ExercisesComponent {
+  public userService = inject(UserService);
+  // Inyectamos el nuevo servicio
+  private exercisesService = inject(ExercisesService);
 
-      // Signal para almacenar el estilo de apego seleccionado para la pareja
-      partnerStyle = signal<string | null>(null);
+  // Tipos de apego disponibles para la selección
+  attachmentStyles: AttachmentStyle[] = ['Seguro', 'Ansioso', 'Evitativo', 'Desorganizado'];
 
-      // Signal computado para obtener el estilo de apego del propio usuario
-      userStyle = computed(() => this.userService.profile()?.testResult?.style || null);
+  // Signal para almacenar el estilo de apego seleccionado para la pareja
+  partnerStyle = signal<AttachmentStyle | null>(null);
 
-      // Signal computado que obtiene los ejercicios una vez que ambos estilos están definidos
-      coupleExercises = computed<Exercise[]>(() => {
-        const uStyle = this.userStyle();
-        const pStyle = this.partnerStyle();
+  // Signal computado para obtener el estilo de apego del propio usuario
+  userStyle = computed(() => this.userService.profile()?.testResult?.style as AttachmentStyle | null);
 
-        if (uStyle && pStyle) {
-          return this.exercisesService.getExercisesForStyles(uStyle, pStyle);
-        }
-        return [];
-      });
+  // Signal computado que obtiene los ejercicios una vez que ambos estilos están definidos
+  coupleExercises = computed<Exercise[]>(() => {
+    const uStyle = this.userStyle();
+    const pStyle = this.partnerStyle();
 
-      /**
-       * Se ejecuta cuando el usuario selecciona el estilo de apego de su pareja.
-       * @param style El estilo seleccionado.
-       */
-      selectPartnerStyle(style: string) {
-        this.partnerStyle.set(style);
-      }
+    if (uStyle && pStyle) {
+      // Usamos el nuevo servicio para obtener los ejercicios
+      return this.exercisesService.getExercisesForStyles(uStyle, pStyle);
     }
-    
+    return [];
+  });
+
+  /**
+   * Se ejecuta cuando el usuario selecciona el estilo de apego de su pareja.
+   * @param style El estilo seleccionado.
+   */
+  selectPartnerStyle(style: AttachmentStyle) {
+    this.partnerStyle.set(style);
+  }
+}
