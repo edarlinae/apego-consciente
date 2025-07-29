@@ -15,10 +15,9 @@
   <ng-template #hasStyle>
     <div class="section-card">
       <h2>Identifico estas conductas en mí...</h2>
-      <p class="section-subtitle">Marca aquellas con las que te sientas más identificado/a. El consejo asociado aparecerá justo debajo.</p>
+      <p class="section-subtitle">Marca aquellas con las que te sientas más identificado/a. Las estrategias asociadas aparecerán justo debajo.</p>
       
       <div class="conducts-list">
-        <!-- Iteramos sobre la nueva estructura que combina conductas y tips -->
         <div *ngFor="let item of conductsWithTips()" class="conduct-item-wrapper">
           <div class="conduct-item">
             <label>
@@ -31,15 +30,14 @@
             </label>
           </div>
 
-          <!-- 
-            Contenedor del tip. Se muestra con una animación si la conducta está seleccionada.
-            La clase 'visible' activa la transición en el SCSS.
-          -->
           <div 
             class="tip-reveal-container" 
             [class.visible]="selectedConductIds().has(item.conduct.id)">
-            <div *ngIf="item.tip" class="tip-item">
-              <p>{{ item.tip.text }}</p>
+            <!-- BUCLE PARA MOSTRAR MÚLTIPLES TIPS -->
+            <div *ngIf="item.tip" class="tips-list">
+              <ul>
+                <li *ngFor="let tipText of item.tip.texts">{{ tipText }}</li>
+              </ul>
             </div>
           </div>
         </div>

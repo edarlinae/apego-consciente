@@ -1,18 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Resources } from './resources';
+// Importamos el nombre correcto del componente
+import { ResourcesComponent } from './resources';
 
-describe('Resources', () => {
-  let component: Resources;
-  let fixture: ComponentFixture<Resources>;
+describe('ResourcesComponent', () => {
+  // Usamos el tipo correcto
+  let component: ResourcesComponent;
+  let fixture: ComponentFixture<ResourcesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Resources]
+      // Importamos el componente
+      imports: [ResourcesComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Resources);
+    // Creamos el componente con el nombre correcto
+    fixture = TestBed.createComponent(ResourcesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

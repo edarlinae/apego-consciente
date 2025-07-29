@@ -1,94 +1,94 @@
-@use 'styles/variables' as *;
+// --- SOLUCIÓN TEMPORAL: Variables Definidas Localmente ---
+// Se han copiado las variables aquí para eliminar el error de importación y
+// permitir que la aplicación compile.
+$accent-gradient: linear-gradient(135deg, #f36ea0 0%, #ff8c6c 100%);
+$primary-text: #333;
+$secondary-text: #777;
+$card-background: #fff;
+$card-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+$card-border: 1px solid transparent; // Asumimos que no hay borde visible por defecto
 
+// --- Contenedor Principal ---
 .resources-container {
   max-width: 900px;
-  margin: 2rem auto;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  animation: fadeIn 0.6s ease-in-out;
 }
 
+// --- Cabecera de la Sección ---
 .resources-header {
   text-align: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
+
   h1 {
     font-family: 'Playfair Display', serif;
     font-size: 2.8rem;
-    color: #333;
+    margin-bottom: 0.5rem;
+    background: $accent-gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
   }
+
   p {
-    font-size: 1.1rem;
-    color: #777;
-    margin-top: -0.5rem;
+    font-size: 1.15rem;
+    color: $secondary-text;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
   }
 }
 
-.placeholder-card, .section-card {
+// --- Tarjeta Principal de Contenido ---
+.section-card {
   background: $card-background;
   padding: 2.5rem;
   border-radius: 20px;
   box-shadow: $card-shadow;
-  margin-bottom: 2rem;
-  text-align: center;
-}
+  border: $card-border;
 
-.section-card {
-  text-align: left;
-}
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: $primary-text;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
 
-h2 {
-  font-family: 'Playfair Display', serif;
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-  font-size: 1.8rem;
-}
-
-.section-subtitle {
-  text-align: center;
-  color: #777;
-  margin-bottom: 2.5rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.action-button {
-  display: inline-block;
-  margin-top: 1.5rem;
-  padding: 0.8rem 1.5rem;
-  color: white;
-  background: $accent-gradient;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 15px rgba(243, 110, 160, 0.3);
-  &:hover {
-    transform: translateY(-2px);
+  .section-subtitle {
+    color: $secondary-text;
+    margin-bottom: 2.5rem;
   }
 }
 
-// --- Estilos para la lista de conductas ---
+// --- Lista de Conductas (Checklist) ---
 .conducts-list {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; // Reducimos el espacio entre items
+  gap: 0.75rem;
 }
 
+// --- Elemento Individual de la Lista (Label) ---
 .conduct-item label {
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 1rem;
+  padding: 1rem 1.25rem;
   border-radius: 12px;
-  background-color: #f9f9f9;
-  border: 1px solid #eee;
-  transition: all 0.2s ease-in-out;
+  background-color: #fdfdfd;
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
 
   &:hover {
-    background-color: #f4f0ff;
-    border-color: #d1c4e9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    border-color: #e8c8e6;
   }
 }
 
+// --- EL NUEVO CHECKBOX PERSONALIZADO ---
 .conduct-item input[type="checkbox"] {
   display: none;
 }
@@ -96,66 +96,140 @@ h2 {
 .custom-checkbox {
   width: 22px;
   height: 22px;
-  border: 2px solid #ccc;
+  border: 2px solid #d1c4e9;
   border-radius: 50%;
   margin-right: 1rem;
   flex-shrink: 0;
-  transition: all 0.2s ease-in-out;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  &::after {
-    content: '';
-    width: 10px;
-    height: 10px;
-    background-color: white;
-    border-radius: 50%;
-    transform: scale(0);
-    transition: transform 0.2s ease-in-out;
-  }
+  transition: all 0.3s ease;
+  background-color: #fff;
 }
 
 .conduct-text {
   color: $primary-text;
-  line-height: 1.5;
+  line-height: 1.6;
+  transition: color 0.3s ease;
 }
 
 .conduct-item input:checked + .custom-checkbox {
   background: $accent-gradient;
   border-color: transparent;
-  &::after {
-    transform: scale(1);
+  &::before {
+    content: '';
+    display: block;
+    width: 12px;
+    height: 12px;
+    background-color: white;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    mask-size: contain;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    -webkit-mask-size: contain;
   }
 }
 
-// --- NUEVOS ESTILOS PARA EL TIP INTEGRADO ---
+.conduct-item input:checked ~ .conduct-text {
+  color: $secondary-text;
+}
 
+// --- Contenedor de Tips (Desplegable) ---
 .tip-reveal-container {
-  // Contenedor que se expande para mostrar el tip
-  max-height: 0; // Oculto por defecto
+  max-height: 0;
   opacity: 0;
   overflow: hidden;
-  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, padding 0.5s ease-in-out;
-  padding: 0 1rem; // Padding horizontal para alinear con la conducta
+  transition: max-height 0.6s ease-in-out, opacity 0.6s ease-in-out, padding-top 0.6s ease-in-out;
+  padding: 0 1rem 0 calc(22px + 1rem + 1.25rem);
 
   &.visible {
-    max-height: 500px; // Altura máxima para permitir la expansión
+    max-height: 500px;
     opacity: 1;
-    padding: 1rem 1rem 0 1rem;
+    padding-top: 1rem;
   }
 }
 
-.tip-item {
-  // Estilo del consejo en sí
-  background: linear-gradient(135deg, #fef5f2 0%, #fdeef2 100%);
+// --- Tarjeta de Tips ---
+.tips-list {
+  background: linear-gradient(135deg, #fff5f8 0%, #fdeef2 100%);
   padding: 1.5rem;
   border-radius: 12px;
-  border-left: 4px solid #ff8c6c;
+  border-left: 4px solid;
+  border-image: $accent-gradient 1;
 
-  p {
+  ul {
+    list-style: none;
+    padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  li {
+    position: relative;
+    padding-left: 22px;
     color: $primary-text;
     line-height: 1.7;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 10px;
+      height: 10px;
+      background: $accent-gradient;
+      border-radius: 50%;
+    }
+  }
+}
+
+// --- Placeholder para cuando no hay estilo de apego ---
+.placeholder-card {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  border: 1px dashed #e8c8e6;
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: $primary-text;
+  }
+  p {
+    color: $secondary-text;
+    margin-bottom: 2rem;
+  }
+}
+
+.action-button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  color: white;
+  background: $accent-gradient;
+  box-shadow: 0 6px 15px rgba(243, 110, 160, 0.3);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(243, 110, 160, 0.4);
+  }
+}
+
+// --- Animación de entrada ---
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
