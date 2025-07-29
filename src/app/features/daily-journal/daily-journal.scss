@@ -1,4 +1,3 @@
-// Corregido: Usamos la ruta simplificada que busca a partir de 'src/app/shared'
 @use 'styles/variables' as *;
 
 // --- Estilos Base Reutilizables para esta sección ---
@@ -21,7 +20,6 @@
   }
 }
 
-// ... (el resto del código es idéntico)
 .journal-container {
   max-width: 900px;
   margin: 2rem auto;
@@ -30,16 +28,8 @@
 .journal-header {
   text-align: center;
   margin-bottom: 2.5rem;
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.8rem;
-    color: #333;
-  }
-  p {
-    font-size: 1.1rem;
-    color: #777;
-    margin-top: -0.5rem;
-  }
+  h1 { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: #333; }
+  p { font-size: 1.1rem; color: #777; margin-top: -0.5rem; }
 }
 
 .add-entry-btn {
@@ -57,13 +47,8 @@
 
 .form-field {
   margin-bottom: 1.5rem;
-  label {
-    display: block;
-    font-weight: 600;
-    color: $primary-text;
-    margin-bottom: 0.5rem;
-  }
-  input, select, textarea {
+  label { display: block; font-weight: 600; color: $primary-text; margin-bottom: 0.5rem; }
+  input, textarea {
     width: 100%;
     padding: 0.8rem;
     border: 1px solid #ddd;
@@ -75,6 +60,37 @@
       border-color: #f36ea0;
       box-shadow: 0 0 0 3px rgba(243, 110, 160, 0.2);
     }
+  }
+}
+
+// --- ESTILOS PARA LA SELECCIÓN DE EMOCIONES ---
+.emotion-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.emotion-tag-option {
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  color: #888;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  &.selected {
+    background: $accent-gradient;
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 6px 15px rgba(243, 110, 160, 0.3);
   }
 }
 
@@ -92,9 +108,7 @@
   }
 }
 
-.entries-list {
-  margin-top: 2rem;
-}
+.entries-list { margin-top: 2rem; }
 
 .entry-card {
   background: #fff;
@@ -124,11 +138,19 @@
 
 .entry-card-footer {
   margin-top: 1.5rem;
-  .emotion-tag { 
-    @extend .journal-btn; 
-    padding: 0.4rem 0.8rem; 
-    font-size: 0.8rem; 
-  }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem; // Espacio entre las etiquetas de emoción
+}
+
+.emotion-tag { 
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: white;
+  background: $accent-gradient;
 }
 
 .no-entries-placeholder {
