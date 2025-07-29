@@ -8,7 +8,7 @@ import { UserService } from '../../core/services/user';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './daily-journal.html',
-  styleUrl: './daily-journal.scss'
+  styleUrls: ['./daily-journal.scss']
 })
 export class DailyJournalComponent {
   public userService = inject(UserService);
@@ -18,11 +18,21 @@ export class DailyJournalComponent {
   
   emotions = ['Alegría', 'Tristeza', 'Enojo', 'Miedo', 'Sorpresa', 'Ansiedad', 'Gratitud', 'Culpa', 'Vergüenza', 'Frustración'];
 
-  journalForm: FormGroup = this.fb.group({
-    title: ['', [Validators.required, Validators.maxLength(100)]],
-    emotions: [[] as string[], [Validators.required, Validators.minLength(1)]],
-    description: ['', [Validators.required, Validators.minLength(10)]]
-  });
+  // El formulario se inicializa llamando a un método para poder recrearlo fácilmente.
+  journalForm: FormGroup = this.createJournalForm();
+
+  /**
+   * NUEVO: Método para crear una instancia limpia del formulario.
+   * Esto asegura que el formulario esté siempre en su estado inicial.
+   * @returns Un nuevo FormGroup.
+   */
+  createJournalForm(): FormGroup {
+    return this.fb.group({
+      title: ['', [Validators.required, Validators.maxLength(100)]],
+      emotions: [[] as string[], [Validators.required, Validators.minLength(1)]],
+      description: ['', [Validators.required, Validators.minLength(10)]]
+    });
+  }
 
   toggleEmotion(emotion: string): void {
     const emotionsControl = this.journalForm.get('emotions') as FormControl;
@@ -43,15 +53,19 @@ export class DailyJournalComponent {
   onSubmit(): void {
     if (this.journalForm.valid) {
       this.userService.addJournalEntry(this.journalForm.value);
-      this.journalForm.reset({ emotions: [] });
+      
+      // --- CORRECCIÓN CLAVE ---
+      // En lugar de resetear, recreamos el formulario para asegurar un estado limpio.
+      this.journalForm = this.createJournalForm(); 
+      
       this.isFormVisible = false;
     }
   }
 
-  // --- NUEVO MÉTODO PARA BORRAR UNA ENTRADA ---
   deleteEntry(entryId: string | undefined): void {
-    // Pedimos confirmación al usuario para evitar borrados accidentales
-    if (entryId && confirm('¿Estás seguro de que quieres borrar esta entrada? No se podrá recuperar.')) {
+    // Se ha eliminado el window.confirm para una mejor experiencia.
+    // Considera añadir un modal de confirmación si lo ves necesario.
+    if (entryId) {
       this.userService.deleteJournalEntry(entryId);
     }
   }

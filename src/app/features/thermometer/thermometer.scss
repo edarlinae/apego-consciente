@@ -1,0 +1,233 @@
+// --- Variables locales para asegurar la compilación ---
+$accent-gradient: linear-gradient(135deg, #f36ea0 0%, #ff8c6c 100%);
+$primary-text: #333;
+$secondary-text: #777;
+$card-background: #fff;
+$card-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+
+// --- Contenedor Principal ---
+.thermometer-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+// --- Cabecera ---
+.thermometer-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: $primary-text;
+  }
+  p {
+    font-size: 1.1rem;
+    color: $secondary-text;
+    margin-top: -0.5rem;
+  }
+}
+
+// --- Botones Principales ---
+.add-checkup-btn, .submit-btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  color: white;
+  background: $accent-gradient;
+  box-shadow: 0 6px 15px rgba(243, 110, 160, 0.3);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(243, 110, 160, 0.4);
+  }
+}
+
+.add-checkup-btn {
+  margin-top: 1.5rem;
+}
+
+// --- Contenedor del Formulario ---
+.form-container {
+  background: $card-background;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: $card-shadow;
+  margin-bottom: 3rem;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+// --- Sección de Estrellas ---
+.rating-section {
+  margin-bottom: 2rem;
+  h4 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    color: $primary-text;
+    font-size: 1.2rem;
+  }
+}
+
+.rating-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  
+  label {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+}
+
+// --- Sistema de Estrellas Interactivo ---
+.rating-stars {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+  
+  button {
+    background: none;
+    border: none;
+    font-size: 2.2rem;
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+    padding: 0 0.2rem;
+
+    &:hover,
+    &:hover ~ button {
+      color: #ffc107;
+      transform: scale(1.1);
+    }
+    
+    &.selected,
+    &.selected ~ button {
+      color: #ffc107;
+    }
+  }
+}
+
+// --- Sección de Preguntas Abiertas ---
+.form-field {
+  margin-bottom: 1.5rem;
+  position: relative; // Necesario para posicionar el mensaje de error
+  label {
+    display: block;
+    font-weight: 600;
+    color: $primary-text;
+    margin-bottom: 0.75rem;
+  }
+  textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+    min-height: 80px;
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #f36ea0;
+      box-shadow: 0 0 0 3px rgba(243, 110, 160, 0.2);
+    }
+  }
+}
+
+// --- NUEVO: Estilos para el mensaje de error ---
+.error-message {
+  color: #d32f2f;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding-top: 0.4rem;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  &:disabled {
+    background: #e0e0e0;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: translateY(0);
+  }
+}
+
+// --- Historial de Chequeos ---
+.history-list {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.checkup-card {
+  background: #fff;
+  border-radius: 15px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  border-left: 5px solid;
+  border-image: $accent-gradient 1;
+}
+
+.checkup-card-header {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  h3 {
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: $primary-text;
+  }
+}
+
+.checkup-card-ratings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  span {
+    color: $secondary-text;
+    font-weight: 600;
+  }
+}
+
+.checkup-card-text {
+  p {
+    line-height: 1.7;
+    color: #666;
+    strong {
+      color: $primary-text;
+      font-weight: 700;
+    }
+  }
+}
+
+.no-entries-placeholder {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #f9f9f9;
+  border-radius: 20px;
+  border: 1px dashed #e0e0e0;
+  p { font-size: 1.2rem; font-weight: 600; color: #555; }
+  span { color: #777; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
