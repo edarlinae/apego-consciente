@@ -4,15 +4,14 @@
       <a routerLink="/home">ApegoConsciente</a>
     </div>
     
-
     <div *ngIf="authService.currentUser()" class="navbar-links">
       <a routerLink="/test-apego" routerLinkActive="active-link">Test</a>
       <a routerLink="/diario" routerLinkActive="active-link">Diario</a>
       <a routerLink="/ejercicios" routerLinkActive="active-link">Ejercicios</a>
       <a routerLink="/recursos" routerLinkActive="active-link">Recursos</a>
       <a routerLink="/planificador" routerLinkActive="active-link">Planificador</a>
+      <a routerLink="/termometro" routerLinkActive="active-link">Termómetro</a>
     </div>
-
 
     <div class="navbar-actions">
       <div *ngIf="authService.currentUser(); else loggedOut">
@@ -32,8 +31,6 @@
   <router-outlet></router-outlet>
 </main>
 
-<!-- --- PIE DE PÁGINA ACTUALIZADO --- -->
 <footer class="main-footer">
-  <!-- Cambiamos el texto del párrafo -->
   <p>© 2025 ApegoConsciente. Creado por Alicia Caparros con Angular.</p>
 </footer>

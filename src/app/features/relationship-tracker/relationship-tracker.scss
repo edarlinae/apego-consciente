@@ -1,0 +1,188 @@
+@use 'styles/variables' as *;
+
+.tracker-container {
+  max-width: 900px;
+  margin: 2rem auto;
+}
+
+.tracker-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  h1 { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: #333; }
+  p { font-size: 1.1rem; color: #777; margin-top: -0.5rem; }
+}
+
+.action-btn {
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+  background: $accent-gradient;
+  box-shadow: 0 6px 15px rgba(243, 110, 160, 0.3);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(243, 110, 160, 0.4);
+  }
+}
+
+.form-container {
+  background: $card-background;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: $card-shadow;
+  margin-bottom: 3rem;
+
+  h2 {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    margin-top: 0;
+  }
+}
+
+.rating-field, .form-field {
+  margin-bottom: 2rem;
+  label {
+    display: block;
+    font-weight: 600;
+    color: $primary-text;
+    margin-bottom: 1rem;
+  }
+}
+
+.hearts-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  .star-radio { display: none; }
+  .star-label {
+    cursor: pointer;
+    .heart {
+      font-size: 2rem;
+      color: #ddd;
+      transition: all 0.2s ease;
+      &.selected, &:hover {
+        color: #ff8c6c;
+        transform: scale(1.1);
+      }
+    }
+  }
+  &:hover .heart {
+    color: #f36ea0;
+  }
+  .star-label:hover ~ .star-label .heart {
+    color: #ddd;
+  }
+}
+
+textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1rem;
+  resize: vertical;
+  &:focus {
+    outline: none;
+    border-color: #f36ea0;
+    box-shadow: 0 0 0 3px rgba(243, 110, 160, 0.2);
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+
+  .submit-btn, .cancel-btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .submit-btn {
+    color: white;
+    background: $accent-gradient;
+    border: none;
+    &:disabled {
+      background: #e0e0e0;
+      cursor: not-allowed;
+    }
+  }
+
+  .cancel-btn {
+    background: #f1f1f1;
+    border: 1px solid #ddd;
+    color: #555;
+  }
+}
+
+.entries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.entry-card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: $card-shadow;
+  
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #f0f0f0;
+    h3 { margin: 0; font-size: 1.4rem; }
+  }
+
+  .entry-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.5;
+    &:hover { opacity: 1; }
+  }
+
+  &-body {
+    padding: 1.5rem;
+  }
+  
+  .ratings-summary {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .rating-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .question-text {
+      color: #555;
+    }
+  }
+  
+  .hearts-display .heart {
+    font-size: 1.2rem;
+    color: #ddd;
+    &.filled { color: #ff8c6c; }
+  }
+
+  .text-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    h4 { margin-top: 0; }
+    p { white-space: pre-wrap; background-color: #f9f9f9; padding: 1rem; border-radius: 8px; }
+  }
+}

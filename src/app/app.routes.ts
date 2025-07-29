@@ -57,14 +57,21 @@ export const routes: Routes = [
         (c) => c.PlannerComponent
       ),
   },
+  // --- NUEVA RUTA ---
   {
-    // La ruta vacía redirige a la nueva página de inicio
+    path: 'termometro',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/relationship-tracker/relationship-tracker').then(
+        (c) => c.RelationshipTrackerComponent
+      ),
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
   },
   {
-    // El comodín ahora también redirige a la página de inicio
     path: '**',
     redirectTo: 'home'
   }

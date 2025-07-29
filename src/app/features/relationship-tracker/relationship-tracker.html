@@ -1,0 +1,82 @@
+<div class="tracker-container">
+  <div class="tracker-header">
+    <h1>Termómetro de Relación</h1>
+    <p>Un espacio para tomar la temperatura de vuestro vínculo cada semana.</p>
+    <button class="action-btn" (click)="isFormVisible.set(true); editingEntryId.set(null)">
+      {{ isFormVisible() ? 'Añadiendo Registro...' : 'Añadir Registro Semanal' }}
+    </button>
+  </div>
+
+  <div *ngIf="isFormVisible()" class="form-container">
+    <form [formGroup]="trackerForm" (ngSubmit)="onSubmit()">
+      <h2>{{ editingEntryId() ? 'Editando Registro' : 'Nuevo Registro Semanal' }}</h2>
+      
+      <div *ngFor="let q of questions" class="rating-field">
+        <label>{{ q.text }}</label>
+        <div class="hearts-container">
+          <ng-container *ngFor="let i of [1,2,3,4,5]">
+            <input type="radio" [id]="q.id + i" [name]="q.id" [value]="i" [formControlName]="q.id" class="star-radio">
+            <label [for]="q.id + i" class="star-label" (click)="setRating(q.id, i)">
+              <span class="heart" [class.selected]="trackerForm.get(q.id)!.value >= i">❤️</span>
+            </label>
+          </ng-container>
+        </div>
+      </div>
+      
+      <div class="form-field">
+        <label for="positiveAspects">¿Qué me he sentido esta semana? Aspectos positivos:</label>
+        <textarea id="positiveAspects" formControlName="positiveAspects" rows="4" placeholder="Ej: Me sentí escuchado/a cuando..."></textarea>
+      </div>
+      
+      <div class="form-field">
+        <label for="negativeAspects">Aspectos negativos o a mejorar:</label>
+        <textarea id="negativeAspects" formControlName="negativeAspects" rows="4" placeholder="Ej: Me sentí solo/a cuando..."></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="cancel-btn" (click)="cancelEdit()">Cancelar</button>
+        <button type="submit" class="submit-btn" [disabled]="trackerForm.invalid">{{ editingEntryId() ? 'Actualizar' : 'Guardar' }}</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="entries-list">
+    <div *ngIf="sortedEntries().length > 0; else noEntries">
+      <div *ngFor="let entry of sortedEntries()" class="entry-card">
+        <div class="entry-card-header">
+          <h3>Semana del {{ entry.date | date:'d MMMM, yyyy' }}</h3>
+          <div class="entry-actions">
+            <button (click)="startEdit(entry)">✏️</button>
+            <button (click)="deleteEntry(entry.id)">🗑️</button>
+          </div>
+        </div>
+        <div class="entry-card-body">
+          <div class="ratings-summary">
+            <div *ngFor="let q of questions" class="rating-display">
+              <span class="question-text">{{ q.text }}</span>
+              <span class="hearts-display">
+                <span *ngFor="let i of [1,2,3,4,5]" class="heart" [class.filled]="entry.ratings[q.id] >= i">❤️</span>
+              </span>
+            </div>
+          </div>
+          <div class="text-summary">
+            <div>
+              <h4>Sentimientos Positivos:</h4>
+              <p>{{ entry.positiveAspects }}</p>
+            </div>
+            <div>
+              <h4>Aspectos a Mejorar:</h4>
+              <p>{{ entry.negativeAspects }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noEntries>
+      <div class="placeholder-card">
+        <p>Aún no hay registros en tu termómetro.</p>
+        <span>¡Crea tu primer registro para empezar a ver vuestra evolución!</span>
+      </div>
+    </ng-template>
+  </div>
+</div>
