@@ -1,15 +1,13 @@
 import { Injectable, inject, signal, effect } from '@angular/core';
 import { TestResult } from './attachment-style';
 import { AuthService } from './auth';
-import { Firestore, doc, setDoc, onSnapshot, collection, addDoc, query, orderBy, updateDoc } from '@angular/fire/firestore';
+import { Firestore, doc, setDoc, onSnapshot, collection, addDoc, query, orderBy, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { Unsubscribe } from '@firebase/util';
 
-// --- CAMBIO CLAVE ---
-// La propiedad 'emotion' ahora es 'emotions' y es un array de strings.
 export interface JournalEntry {
   id?: string;
   date: string;
-  emotions: string[]; // Antes era 'emotion: string'
+  emotions: string[];
   title: string;
   description: string;
 }
@@ -90,8 +88,6 @@ export class UserService {
     await setDoc(profileDocRef, { testResult: result, selectedConducts: [] }, { merge: true });
   }
 
-  // --- CAMBIO CLAVE ---
-  // El método ahora acepta un array 'emotions'.
   async addJournalEntry(entryData: { title: string; emotions: string[]; description: string }) {
     const uid = this.authService.uid();
     if (!uid) return;
@@ -100,6 +96,16 @@ export class UserService {
       date: new Date().toISOString(),
       ...entryData
     });
+  }
+
+  // --- NUEVO MÉTODO PARA BORRAR ENTRADAS ---
+  async deleteJournalEntry(entryId: string) {
+    const uid = this.authService.uid();
+    if (!uid || !entryId) return; // Seguridad extra
+    
+    // Creamos una referencia directa al documento que queremos borrar
+    const entryDocRef = doc(this.firestore, `users/${uid}/journal/${entryId}`);
+    await deleteDoc(entryDocRef);
   }
 
   async updateSelectedConducts(conducts: string[]) {

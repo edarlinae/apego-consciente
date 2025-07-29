@@ -14,7 +14,6 @@
         <input id="title" type="text" formControlName="title" placeholder="Ej: Discusión sobre las tareas">
       </div>
 
-      <!-- --- SECCIÓN DE EMOCIONES REDISEÑADA --- -->
       <div class="form-field">
         <label>¿Qué emociones principales sentiste?</label>
         <div class="emotion-options">
@@ -39,6 +38,7 @@
 
   <div class="entries-list">
     <div *ngIf="userService.journalEntries().length > 0; else noEntries">
+      <!-- Contenedor de la tarjeta de entrada del diario -->
       <div *ngFor="let entry of userService.journalEntries()" class="entry-card">
         <div class="entry-card-header">
           <h3>{{ entry.title }}</h3>
@@ -47,9 +47,17 @@
         <div class="entry-card-body">
           <p>{{ entry.description }}</p>
         </div>
-        <!-- --- VISUALIZACIÓN DE MÚLTIPLES EMOCIONES --- -->
+        <!-- Pie de la tarjeta -->
         <div class="entry-card-footer">
-          <span *ngFor="let emotion of entry.emotions" class="emotion-tag">{{ emotion }}</span>
+          <!-- Contenedor para las etiquetas de emoción -->
+          <div class="emotion-tags-container">
+            <span *ngFor="let emotion of entry.emotions" class="emotion-tag">{{ emotion }}</span>
+          </div>
+          <!-- Botón de borrado -->
+          <button class="delete-btn" (click)="deleteEntry(entry.id)" title="Borrar entrada">
+            <!-- Icono de papelera en formato SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+          </button>
         </div>
       </div>
     </div>

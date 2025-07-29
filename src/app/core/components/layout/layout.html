@@ -1,11 +1,9 @@
 <header class="main-header">
   <nav class="navbar">
-    <!-- CORREGIDO: El logo ahora apunta a '/home' -->
     <div class="navbar-brand">
       <a routerLink="/home">ApegoConsciente</a>
     </div>
 
-    <!-- Enlaces para usuarios autenticados -->
     <div *ngIf="authService.currentUser()" class="navbar-links">
       <a routerLink="/test-apego" routerLinkActive="active-link">Test</a>
       <a routerLink="/diario" routerLinkActive="active-link">Diario</a>
@@ -13,16 +11,12 @@
       <a routerLink="/recursos" routerLinkActive="active-link">Recursos</a>
     </div>
 
-    <!-- Acciones de la barra de navegación -->
     <div class="navbar-actions">
-      <!-- Si hay un usuario, muestra Perfil y Salir -->
       <div *ngIf="authService.currentUser(); else loggedOut">
-        <!-- CORREGIDO: El botón de perfil ahora apunta a '/perfil' -->
         <a routerLink="/perfil" class="profile-link">Mi Perfil</a>
         <button (click)="authService.logout()" class="logout-btn">Salir</button>
       </div>
 
-      <!-- Si no hay usuario, muestra Login y Registro -->
       <ng-template #loggedOut>
         <a routerLink="/auth/login" class="auth-link">Iniciar Sesión</a>
         <a routerLink="/auth/register" class="profile-link">Crear Cuenta</a>
@@ -35,6 +29,8 @@
   <router-outlet></router-outlet>
 </main>
 
+<!-- --- PIE DE PÁGINA ACTUALIZADO --- -->
 <footer class="main-footer">
-  <p>&copy; 2025 ApegoConsciente. Todos los derechos reservados.</p>
+  <!-- Cambiamos el texto del párrafo -->
+  <p>© 2025 ApegoConsciente. Creado por Alicia Caparros con Angular.</p>
 </footer>
