@@ -1,7 +1,10 @@
-@use 'styles/variables' as *;
+// --- SOLUCIÓN TEMPORAL: Variables Definidas Localmente ---
+// Se han copiado las variables aquí para eliminar el error de importación.
+$accent-gradient: linear-gradient(135deg, #f36ea0 0%, #ff8c6c 100%);
+$primary-text: #333;
 
 .planner-container {
-  max-width: 1200px; // Un poco más de espacio para la cuadrícula
+  max-width: 1200px;
   margin: 2rem auto;
   padding: 0 2rem;
 }
@@ -13,23 +16,20 @@
   p { font-size: 1.1rem; color: #777; margin-top: -0.5rem; }
 }
 
-// --- CAMBIO CLAVE: Cuadrícula 2x2 ---
 .planner-board {
   display: grid;
-  // En pantallas grandes, crea una cuadrícula de 2 columnas
   grid-template-columns: repeat(2, 1fr);
-  gap: 2rem; // Aumentamos el espacio entre columnas
+  gap: 2rem;
   align-items: start;
 
-  // En pantallas más pequeñas (tablets y móviles), vuelve a una sola columna
   @media (max-width: 992px) {
     grid-template-columns: 1fr;
   }
 }
 
 .planner-column {
-  background-color: #f9f9f9; // Un fondo de columna más suave
-  border-radius: 16px; // Bordes más redondeados
+  background-color: #f9f9f9;
+  border-radius: 16px;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -51,7 +51,6 @@
     font-weight: 700;
   }
 
-  // --- CAMBIO CLAVE: Nuevos Degradados Pastel ---
   &.personal { background: linear-gradient(135deg, #a8e063, #56ab2f); }
   &.conversations { background: linear-gradient(135deg, #a1c4fd, #c2e9fb); }
   &.coupleFun { background: linear-gradient(135deg, #fbc2eb, #a6c1ee); }
@@ -82,6 +81,14 @@
       text-decoration: line-through;
       color: #999;
     }
+    // --- MODIFICADO: Estilos del checkbox personalizado cuando está marcado ---
+    .custom-checkbox {
+      border-color: #f36ea0;
+      background-color: #fff;
+      &::after {
+        opacity: 1;
+      }
+    }
   }
 }
 
@@ -91,15 +98,55 @@
   gap: 0.75rem;
   flex-grow: 1;
   
+  // --- NUEVO: Ocultamos el checkbox por defecto del navegador ---
   input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-    accent-color: #a6c1ee; // Color del check a juego con la paleta
+    display: none;
   }
 
   .note-text {
     color: $primary-text;
+    transition: color 0.3s ease;
+  }
+}
+
+// --- NUEVO: Contenedor del checkbox para hacerlo clickeable ---
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+// --- NUEVO: Estilos del checkbox personalizado ---
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d1c4e9;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+
+  // --- NUEVO: El "check" (V) con el degradado ---
+  &::after {
+    content: '';
+    display: block;
+    width: 14px;
+    height: 14px;
+    opacity: 0; // Oculto por defecto
+    transition: opacity 0.2s ease;
+    
+    // La magia: Usamos una máscara SVG para darle forma de "V" a un fondo con degradado.
+    background: $accent-gradient;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
   }
 }
 
