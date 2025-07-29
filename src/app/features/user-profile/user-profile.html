@@ -8,7 +8,6 @@
     <div class="result-wrapper">
       <div *ngIf="userProfile.testResult; else noTest">
         <ng-container *ngIf="userProfile.testResult.details as details">
-          <!-- --- SECCIÓN CORREGIDA --- -->
           <div class="result-header">
             <span class="result-subtitle">Tu estilo de apego principal es</span>
             <h2 class="result-style">{{ userProfile.testResult.style }}</h2>
