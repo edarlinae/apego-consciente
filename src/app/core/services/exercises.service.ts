@@ -9,219 +9,94 @@ export interface Exercise {
 }
 
 // Tipos para los estilos de apego, para mayor seguridad en el código
-type AttachmentStyle = 'Ansioso' | 'Evitativo' | 'Seguro' | 'Desorganizado';
+export type AttachmentStyle = 'Ansioso' | 'Evitativo' | 'Seguro' | 'Desorganizado';
 
 // Base de datos de ejercicios por combinación de estilos
 const exercisesData: Record<string, Exercise[]> = {
-  // --- Dinámica: TÚ (Ansioso) y tu PAREJA (Segura) ---
+  // --- DINÁMICAS YA EXISTENTES ---
   'Ansioso-Seguro': [
-    {
-      icon: '💬',
-      title: 'El Chequeo Emocional Diario',
-      description: 'Un ritual diario para que el ansioso exprese su necesidad de conexión y el seguro ofrezca tranquilidad sin sentirse presionado.',
-      steps: [
-        'Acordad un momento del día sin distracciones (ej. 10 min después de cenar).',
-        'El miembro ansioso comparte: "Hoy me he sentido (emoción) y lo que necesitaría de ti ahora es (necesidad específica, ej: un abrazo, escucharme 5 min)".',
-        'El miembro seguro escucha activamente, valida la emoción ("Entiendo que te sientas así") y ofrece la tranquilidad pedida.',
-        'El objetivo no es resolver problemas, sino conectar y validar.'
-      ]
-    },
-    {
-      icon: '🧠',
-      title: 'Cuestionando la Narrativa del Miedo',
-      description: 'Ejercicio para que el ansioso aprenda a desafiar sus pensamientos catastróficos con la ayuda lógica y calmada del seguro.',
-      steps: [
-        'Cuando el ansioso sienta un pico de ansiedad (ej. "no me ha escrito, algo va mal"), lo comparte con el seguro.',
-        'El seguro, en lugar de decir "no te preocupes", pregunta con curiosidad: "¿Qué es lo peor que crees que podría pasar? ¿Y qué tres explicaciones alternativas y más probables existen?".',
-        'Juntos, exploran las evidencias reales que contradicen el miedo.',
-        'El seguro ayuda al ansioso a anclarse en la realidad de la relación, no en la ansiedad.'
-      ]
-    },
-    {
-      icon: '❤️',
-      title: 'El Tarro de la Seguridad',
-      description: 'Una forma visual y tangible de acumular pruebas de la seguridad del vínculo, para que el ansioso pueda recurrir a ellas en momentos de duda.',
-      steps: [
-        'Decorad un tarro o una caja juntos.',
-        'Cada vez que el miembro seguro haga algo que aporte seguridad (un mensaje inesperado, un gesto de apoyo), el miembro ansioso lo escribe en un papelito y lo mete en el tarro.',
-        'Cuando el ansioso sienta inseguridad, puede abrir el tarro y leer los recuerdos de seguridad.',
-        'Esto entrena al cerebro ansioso a enfocarse en las pruebas de conexión, no en las de posible abandono.'
-      ]
-    },
-    {
-      icon: '🗺️',
-      title: 'Mapa de la Independencia Compartida',
-      description: 'Fomenta que el ansioso desarrolle su mundo interior, apoyado por la confianza del seguro.',
-      steps: [
-        'En una cartulina, cada uno escribe 3 hobbies o intereses que quiere desarrollar por su cuenta.',
-        'El miembro seguro expresa verbalmente su apoyo incondicional: "Me encanta que hagas esto por ti, cuéntame cómo te va".',
-        'Agendan "citas individuales" en el calendario y se comprometen a respetarlas.',
-        'Al reencontrarse, comparten con entusiasmo sus experiencias, enriqueciendo la relación.'
-      ]
-    },
-    {
-      icon: '🤝',
-      title: 'Negociando la Necesidad de Espacio',
-      description: 'Un ejercicio para que el seguro pueda pedir espacio sin activar el miedo al abandono del ansioso.',
-      steps: [
-        'El seguro aprende a pedir espacio de forma proactiva y con un tiempo definido: "Necesito una hora para mí, pero a las 8 estoy totalmente para ti".',
-        'El ansioso practica la auto-calma durante ese tiempo, usando una de sus estrategias (ver sección "Recursos").',
-        'Es crucial que el seguro cumpla el tiempo prometido para construir confianza.',
-        'Al volver, el seguro inicia la reconexión con un gesto de afecto, reforzando que el espacio no es rechazo.'
-      ]
-    },
-    {
-      icon: '🗣️',
-      title: 'Traduciendo el Lenguaje del Apego',
-      description: 'Aprender a comunicar las necesidades de forma que el otro pueda entenderlas y satisfacerlas.',
-      steps: [
-        'El ansioso traduce su protesta ("¡Nunca me escuchas!") a una necesidad vulnerable ("Me siento solo/a y necesito sentir que te importo").',
-        'El seguro traduce su retirada ("Necesito estar solo") a una necesidad de regulación ("Me siento abrumado/a y necesito un momento para procesar antes de poder hablar").',
-        'Practican usar estas nuevas frases en conversaciones de bajo riesgo.',
-        'Esto crea un puente de empatía y reduce los malentendidos.'
-      ]
-    }
+    { icon: '💬', title: 'El Chequeo Emocional Diario', description: 'Un ritual diario para que el ansioso exprese su necesidad de conexión y el seguro ofrezca tranquilidad sin sentirse presionado.', steps: ['Acordad un momento del día sin distracciones (ej. 10 min después de cenar).','El miembro ansioso comparte: "Hoy me he sentido (emoción) y lo que necesitaría de ti ahora es (necesidad específica, ej: un abrazo, escucharme 5 min)".','El miembro seguro escucha activamente, valida la emoción ("Entiendo que te sientas así") y ofrece la tranquilidad pedida.','El objetivo no es resolver problemas, sino conectar y validar.'] },
+    { icon: '🧠', title: 'Cuestionando la Narrativa del Miedo', description: 'Ejercicio para que el ansioso aprenda a desafiar sus pensamientos catastróficos con la ayuda lógica y calmada del seguro.', steps: ['Cuando el ansioso sienta un pico de ansiedad (ej. "no me ha escrito, algo va mal"), lo comparte con el seguro.','El seguro, en lugar de decir "no te preocupes", pregunta con curiosidad: "¿Qué es lo peor que crees que podría pasar? ¿Y qué tres explicaciones alternativas y más probables existen?".','Juntos, exploran las evidencias reales que contradicen el miedo.','El seguro ayuda al ansioso a anclarse en la realidad de la relación, no en la ansiedad.'] },
+    { icon: '❤️', title: 'El Tarro de la Seguridad', description: 'Una forma visual y tangible de acumular pruebas de la seguridad del vínculo, para que el ansioso pueda recurrir a ellas en momentos de duda.', steps: ['Decorad un tarro o una caja juntos.','Cada vez que el miembro seguro haga algo que aporte seguridad (un mensaje inesperado, un gesto de apoyo), el miembro ansioso lo escribe en un papelito y lo mete en el tarro.','Cuando el ansioso sienta inseguridad, puede abrir el tarro y leer los recuerdos de seguridad.','Esto entrena al cerebro ansioso a enfocarse en las pruebas de conexión, no en las de posible abandono.'] },
+    { icon: '🗺️', title: 'Mapa de la Independencia Compartida', description: 'Fomenta que el ansioso desarrolle su mundo interior, apoyado por la confianza del seguro.', steps: ['En una cartulina, cada uno escribe 3 hobbies o intereses que quiere desarrollar por su cuenta.','El miembro seguro expresa verbalmente su apoyo incondicional: "Me encanta que hagas esto por ti, cuéntame cómo te va".','Agendan "citas individuales" en el calendario y se comprometen a respetarlas.','Al reencontrarse, comparten con entusiasmo sus experiencias, enriqueciendo la relación.'] },
+    { icon: '🤝', title: 'Negociando la Necesidad de Espacio', description: 'Un ejercicio para que el seguro pueda pedir espacio sin activar el miedo al abandono del ansioso.', steps: ['El seguro aprende a pedir espacio de forma proactiva y con un tiempo definido: "Necesito una hora para mí, pero a las 8 estoy totalmente para ti".','El ansioso practica la auto-calma durante ese tiempo, usando una de sus estrategias (ver sección "Recursos").','Es crucial que el seguro cumpla el tiempo prometido para construir confianza.','Al volver, el seguro inicia la reconexión con un gesto de afecto, reforzando que el espacio no es rechazo.'] },
+    { icon: '🗣️', title: 'Traduciendo el Lenguaje del Apego', description: 'Aprender a comunicar las necesidades de forma que el otro pueda entenderlas y satisfacerlas.', steps: ['El ansioso traduce su protesta ("¡Nunca me escuchas!") a una necesidad vulnerable ("Me siento solo/a y necesito sentir que te importo").','El seguro traduce su retirada ("Necesito estar solo") a una necesidad de regulación ("Me siento abrumado/a y necesito un momento para procesar antes de poder hablar").','Practican usar estas nuevas frases en conversaciones de bajo riesgo.','Esto crea un puente de empatía y reduce los malentendidos.'] }
   ],
-  // --- Dinámica: TÚ (Ansioso) y tu PAREJA (Evitativa) ---
   'Ansioso-Evitativo': [
-    {
-      icon: '🚦',
-      title: 'El Semáforo de la Conexión',
-      description: 'Una herramienta visual para que el ansioso pueda medir el nivel de disponibilidad del evitativo sin presionar, y el evitativo pueda comunicar su estado sin palabras.',
-      steps: [
-        'Cread tres tarjetas: una verde ("Estoy disponible y receptivo"), una amarilla ("Necesito un momento, me siento algo saturado") y una roja ("Ahora mismo no puedo, necesito espacio para mí").',
-        'El miembro evitativo puede colocar la tarjeta correspondiente en un lugar visible (ej. en la nevera).',
-        'El miembro ansioso se compromete a respetar la señal, usando ese tiempo para su propio autocuidado.',
-        'Esto reduce la persecución del ansioso y la huida del evitativo, creando un espacio más seguro para ambos.'
-      ]
-    },
-    {
-      icon: '🏝️',
-      title: 'La Isla Segura',
-      description: 'Crear un tiempo y espacio sagrado para la conexión, libre de demandas y presiones, donde ambos puedan bajar sus defensas.',
-      steps: [
-        'Agendad 20 minutos, dos veces por semana, como "Tiempo en la Isla Segura".',
-        'Durante este tiempo, está prohibido hablar de problemas de la relación, logística o temas estresantes.',
-        'Solo pueden hacer algo agradable juntos: escuchar una canción, tomar un té, compartir algo bueno del día.',
-        'El objetivo es que el evitativo asocie la cercanía con calma y disfrute, y el ansioso reciba una dosis predecible de conexión.'
-      ]
-    },
-    {
-      icon: '📦',
-      title: 'La Caja de las Preocupaciones',
-      description: 'Un lugar simbólico para que el ansioso "deposite" sus ansiedades en lugar de volcarlas sobre el evitativo, y que puedan ser revisadas en un momento pactado.',
-      steps: [
-        'Decorad una caja juntos.',
-        'Cuando el ansioso tenga una preocupación sobre la relación, la escribe y la mete en la caja.',
-        'Una vez a la semana, abren la caja juntos y hablan sobre uno o dos de los papeles de forma calmada.',
-        'Esto enseña al ansioso a contener su ansiedad y al evitativo a no sentirse constantemente bombardeado.'
-      ]
-    },
-    {
-      icon: '🏆',
-      title: 'Celebrando la Autonomía del Otro',
-      description: 'Cambiar el enfoque de la interdependencia a la celebración de la individualidad de cada uno.',
-      steps: [
-        'El miembro ansioso hace un esfuerzo consciente por animar al evitativo a tener su propio espacio y hobbies.',
-        'El miembro evitativo comparte algo positivo de su tiempo a solas, mostrando que no es un rechazo.',
-        'Ambos se agradecen mutuamente el respeto por la independencia del otro.',
-        'Esto ayuda al evitativo a sentirse menos "atrapado" y al ansioso a construir su propia autoestima.'
-      ]
-    },
-    {
-      icon: '📜',
-      title: 'El Guion de la Desactivación',
-      description: 'Tener frases preparadas para desactivar el ciclo de persecución-huida cuando empieza.',
-      steps: [
-        'El ansioso prepara la frase: "Veo que necesitas espacio. Voy a cuidar de mí. Aquí estoy cuando estés listo/a".',
-        'El evitativo prepara la frase: "No es por ti. Me siento saturado/a. Necesito X minutos y vuelvo".',
-        'Practican decirlas en voz alta cuando están calmados.',
-        'Usarlas durante un conflicto rompe el patrón automático y da a ambos un respiro para regularse.'
-      ]
-    },
-    {
-      icon: '💖',
-      title: 'Afecto No Exigente',
-      description: 'Encontrar formas de conexión física que no se sientan abrumadoras para el evitativo.',
-      steps: [
-        'Explorad formas de contacto que no sean cara a cara, como sentarse espalda con espalda mientras leen, o tocarse los pies en el sofá.',
-        'El ansioso propone: "¿Te apetece un abrazo de 10 segundos?", dando control y un límite claro al evitativo.',
-        'Normalizad el afecto casual, como un toque en el brazo al pasar.',
-        'Esto permite la conexión sin la intensidad que puede abrumar al evitativo.'
-      ]
-    }
-    // ... Añadir más combinaciones aquí
+    { icon: '🚦', title: 'El Semáforo de la Conexión', description: 'Una herramienta visual para que el ansioso pueda medir el nivel de disponibilidad del evitativo sin presionar, y el evitativo pueda comunicar su estado sin palabras.', steps: ['Cread tres tarjetas: una verde ("Estoy disponible y receptivo"), una amarilla ("Necesito un momento, me siento algo saturado") y una roja ("Ahora mismo no puedo, necesito espacio para mí").','El miembro evitativo puede colocar la tarjeta correspondiente en un lugar visible (ej. en la nevera).','El miembro ansioso se compromete a respetar la señal, usando ese tiempo para su propio autocuidado.','Esto reduce la persecución del ansioso y la huida del evitativo, creando un espacio más seguro para ambos.'] },
+    { icon: '🏝️', title: 'La Isla Segura', description: 'Crear un tiempo y espacio sagrado para la conexión, libre de demandas y presiones, donde ambos puedan bajar sus defensas.', steps: ['Agendad 20 minutos, dos veces por semana, como "Tiempo en la Isla Segura".','Durante este tiempo, está prohibido hablar de problemas de la relación, logística o temas estresantes.','Solo pueden hacer algo agradable juntos: escuchar una canción, tomar un té, compartir algo bueno del día.','El objetivo es que el evitativo asocie la cercanía con calma y disfrute, y el ansioso reciba una dosis predecible de conexión.'] },
+    { icon: '📦', title: 'La Caja de las Preocupaciones', description: 'Un lugar simbólico para que el ansioso "deposite" sus ansiedades en lugar de volcarlas sobre el evitativo, y que puedan ser revisadas en un momento pactado.', steps: ['Decorad una caja juntos.','Cuando el ansioso tenga una preocupación sobre la relación, la escribe y la mete en la caja.','Una vez a la semana, abren la caja juntos y hablan sobre uno o dos de los papeles de forma calmada.','Esto enseña al ansioso a contener su ansiedad y al evitativo a no sentirse constantemente bombardeado.'] },
+    { icon: '🏆', title: 'Celebrando la Autonomía del Otro', description: 'Cambiar el enfoque de la interdependencia a la celebración de la individualidad de cada uno.', steps: ['El miembro ansioso hace un esfuerzo consciente por animar al evitativo a tener su propio espacio y hobbies.','El miembro evitativo comparte algo positivo de su tiempo a solas, mostrando que no es un rechazo.','Ambos se agradecen mutuamente el respeto por la independencia del otro.','Esto ayuda al evitativo a sentirse menos "atrapado" y al ansioso a construir su propia autoestima.'] },
+    { icon: '📜', title: 'El Guion de la Desactivación', description: 'Tener frases preparadas para desactivar el ciclo de persecución-huida cuando empieza.', steps: ['El ansioso prepara la frase: "Veo que necesitas espacio. Voy a cuidar de mí. Aquí estoy cuando estés listo/a".','El evitativo prepara la frase: "No es por ti. Me siento saturado/a. Necesito X minutos y vuelvo".','Practican decirlas en voz alta cuando están calmados.','Usarlas durante un conflicto rompe el patrón automático y da a ambos un respiro para regularse.'] },
+    { icon: '💖', title: 'Afecto No Exigente', description: 'Encontrar formas de conexión física que no se sientan abrumadoras para el evitativo.', steps: ['Explorad formas de contacto que no sean cara a cara, como sentarse espalda con espalda mientras leen, o tocarse los pies en el sofá.','El ansioso propone: "¿Te apetece un abrazo de 10 segundos?", dando control y un límite claro al evitativo.','Normalizad el afecto casual, como un toque en el brazo al pasar.','Esto permite la conexión sin la intensidad que puede abrumar al evitativo.'] }
   ],
-  // --- Dinámica: TÚ (Seguro) y tu PAREJA (Evitativa) ---
   'Seguro-Evitativo': [
-    {
-      icon: '⚓',
-      title: 'El Ancla de la Calma',
-      description: 'Tú, como ancla segura, ayudas a tu pareja a regularse cuando se siente abrumada, sin presionar.',
-      steps: [
-        'Cuando notes que tu pareja se distancia, en lugar de preguntar "¿Qué te pasa?", prueba a decir con calma: "Parece que es un momento intenso. Tómate el espacio que necesites, yo estoy aquí".',
-        'Ofrece apoyo no verbal: un vaso de agua, una manta, o simplemente tu presencia silenciosa en la misma habitación.',
-        'No intentes "solucionar" su emoción. Tu calma es el mejor co-regulador.',
-        'Esto le enseña al evitativo que la intimidad no tiene por qué ser invasiva y que puede contar con tu presencia estable.'
-      ]
-    },
-    {
-      icon: '🗓️',
-      title: 'Rituales de Conexión Predecibles',
-      description: 'La predictibilidad crea seguridad para el evitativo. Establecer rituales de conexión de baja presión.',
-      steps: [
-        'Acordad una actividad corta y regular que sea solo vuestra. Ej: tomar el café juntos 15 minutos por la mañana sin móviles.',
-        'Mantened este ritual de forma consistente. La clave es la fiabilidad, no la intensidad.',
-        'Durante el ritual, enfocaos en temas ligeros y positivos. No es el momento de discusiones profundas.',
-        'Esto construye una base de confianza y demuestra que la conexión puede ser segura y no demandante.'
-      ]
-    },
-    {
-      icon: '🗣️',
-      title: 'Comunicación Proactiva del Espacio',
-      description: 'Como persona segura, puedes modelar cómo comunicar las necesidades de forma saludable, incluyendo la tuya.',
-      steps: [
-        'Sé el primero en decir: "Hoy he tenido un día duro, necesito 30 minutos para desconectar antes de que hablemos".',
-        'Al hacer esto, normalizas la necesidad de espacio y demuestras que no significa rechazo.',
-        'Anima a tu pareja a hacer lo mismo, sin juzgar la cantidad de tiempo que necesite.',
-        'Esto le da al evitativo el "permiso" y el lenguaje para pedir lo que necesita sin sentirse culpable.'
-      ]
-    },
-    {
-      icon: '🔍',
-      title: 'El Detective de Intereses',
-      description: 'Muestra un interés genuino en el mundo interior y las pasiones de tu pareja evitativa.',
-      steps: [
-        'En lugar de preguntar por sus sentimientos, pregunta por sus hobbies, proyectos o cosas que ha aprendido.',
-        'Haz preguntas abiertas y curiosas sobre esos temas: "¿Qué es lo que más te gusta de eso? ¿Cómo funciona?".',
-        'Escucha activamente sin intentar convertirlo en una conversación emocional.',
-        'Conectar a través de sus pasiones es una puerta trasera hacia la intimidad que se siente mucho más segura para ellos.'
-      ]
-    },
-    {
-      icon: '🤝',
-      title: 'El Equipo de Resolución de Problemas',
-      description: 'Abordar los problemas como un equipo contra el problema, no como tú contra tu pareja.',
-      steps: [
-        'Plantea los problemas de forma práctica y lógica. "Tenemos este desafío logístico. ¿Qué soluciones se te ocurren?".',
-        'Usa un lenguaje de equipo: "Nosotros", "nuestro desafío", "juntos".',
-        'Enfocaos en la acción y las soluciones, no solo en el análisis de las emociones.',
-        'Esto apela a la fortaleza del evitativo en la resolución práctica y reduce la sensación de ataque emocional.'
-      ]
-    },
-    {
-      icon: '💌',
-      title: 'Aprecio por Escrito',
-      description: 'El afecto expresado de forma indirecta puede ser más fácil de recibir para una persona evitativa.',
-      steps: [
-        'Déjale una nota corta y específica agradeciendo algo que hizo: "Gracias por preparar el café esta mañana, me ha encantado".',
-        'Envíale un mensaje de texto apreciando una cualidad suya: "Admiro mucho lo bien que se te da [su habilidad]".',
-        'No esperes una gran reacción emocional. El mensaje será recibido y procesado internamente.',
-        'Esta forma de comunicación asíncrona respeta su necesidad de procesar las emociones en privado.'
-      ]
-    }
+    { icon: '⚓', title: 'El Ancla de la Calma', description: 'Tú, como ancla segura, ayudas a tu pareja a regularse cuando se siente abrumada, sin presionar.', steps: ['Cuando notes que tu pareja se distancia, en lugar de preguntar "¿Qué te pasa?", prueba a decir con calma: "Parece que es un momento intenso. Tómate el espacio que necesites, yo estoy aquí".','Ofrece apoyo no verbal: un vaso de agua, una manta, o simplemente tu presencia silenciosa en la misma habitación.','No intentes "solucionar" su emoción. Tu calma es el mejor co-regulador.','Esto le enseña al evitativo que la intimidad no tiene por qué ser invasiva y que puede contar con tu presencia estable.'] },
+    { icon: '🗓️', title: 'Rituales de Conexión Predecibles', description: 'La predictibilidad crea seguridad para el evitativo. Establecer rituales de conexión de baja presión.', steps: ['Acordad una actividad corta y regular que sea solo vuestra. Ej: tomar el café juntos 15 minutos por la mañana sin móviles.','Mantened este ritual de forma consistente. La clave es la fiabilidad, no la intensidad.','Durante el ritual, enfocaos en temas ligeros y positivos. No es el momento de discusiones profundas.','Esto construye una base de confianza y demuestra que la conexión puede ser segura y no demandante.'] },
+    { icon: '🗣️', title: 'Comunicación Proactiva del Espacio', description: 'Como persona segura, puedes modelar cómo comunicar las necesidades de forma saludable, incluyendo la tuya.', steps: ['Sé el primero en decir: "Hoy he tenido un día duro, necesito 30 minutos para desconectar antes de que hablemos".','Al hacer esto, normalizas la necesidad de espacio y demuestras que no significa rechazo.','Anima a tu pareja a hacer lo mismo, sin juzgar la cantidad de tiempo que necesite.','Esto le da al evitativo el "permiso" y el lenguaje para pedir lo que necesita sin sentirse culpable.'] },
+    { icon: '🔍', title: 'El Detective de Intereses', description: 'Muestra un interés genuino en el mundo interior y las pasiones de tu pareja evitativa.', steps: ['En lugar de preguntar por sus sentimientos, pregunta por sus hobbies, proyectos o cosas que ha aprendido.','Haz preguntas abiertas y curiosas sobre esos temas: "¿Qué es lo que más te gusta de eso? ¿Cómo funciona?".','Escucha activamente sin intentar convertirlo en una conversación emocional.','Conectar a través de sus pasiones es una puerta trasera hacia la intimidad que se siente mucho más segura para ellos.'] },
+    { icon: '🤝', title: 'El Equipo de Resolución de Problemas', description: 'Abordar los problemas como un equipo contra el problema, no como tú contra tu pareja.', steps: ['Plantea los problemas de forma práctica y lógica. "Tenemos este desafío logístico. ¿Qué soluciones se te ocurren?".','Usa un lenguaje de equipo: "Nosotros", "nuestro desafío", "juntos".','Enfocaos en la acción y las soluciones, no solo en el análisis de las emociones.','Esto apela a la fortaleza del evitativo en la resolución práctica y reduce la sensación de ataque emocional.'] },
+    { icon: '💌', title: 'Aprecio por Escrito', description: 'El afecto expresado de forma indirecta puede ser más fácil de recibir para una persona evitativa.', steps: ['Déjale una nota corta y específica agradeciendo algo que hizo: "Gracias por preparar el café esta mañana, me ha encantado".','Envíale un mensaje de texto apreciando una cualidad suya: "Admiro mucho lo bien que se te da [su habilidad]".','No esperes una gran reacción emocional. El mensaje será recibido y procesado internamente.','Esta forma de comunicación asíncrona respeta su necesidad de procesar las emociones en privado.'] }
+  ],
+  
+  // --- NUEVAS DINÁMICAS ---
+
+  'Ansioso-Ansioso': [
+    { icon: '🌊', title: 'Surfear la Ola de Ansiedad Juntos', description: 'En lugar de que la ansiedad de uno active la del otro, aprended a reconocerla y gestionarla como equipo.', steps: ['Cuando uno sienta ansiedad, lo comunica: "Estoy en una ola de ansiedad ahora mismo".', 'El otro, en lugar de intentar solucionarlo, responde: "Ok, estoy aquí contigo. ¿Qué necesitas? ¿Espacio, un abrazo, silencio?".', 'Practicad la respiración diafragmática juntos por 2 minutos para co-regular vuestros sistemas nerviosos.', 'El objetivo es ser un ancla para el otro, no un catalizador.'] },
+    { icon: '🛡️', title: 'El Escudo de la Autoestima Individual', description: 'Fortalecer la seguridad individual para que la relación no sea la única fuente de validación.', steps: ['Cada uno escribe 3 cosas que le gustan de sí mismo, que no tengan nada que ver con la relación.', 'Durante la semana, cada uno debe realizar una actividad que nutra su propia autoestima (un hobby, ejercicio, etc.).', 'Al final de la semana, comparten qué hicieron y cómo se sintieron, celebrando la independencia del otro.', 'Una relación de dos personas seguras es más fuerte que una de dos personas que se necesitan para sentirse completas.'] },
+    { icon: '📝', title: 'El Contrato de la Comunicación Clara', description: 'Establecer reglas claras para evitar leer la mente y asumir lo peor.', steps: ['Acordad no usar el silencio como castigo. Si necesitáis espacio, se comunica verbalmente.', 'Pactad preguntar directamente en lugar de asumir: "¿La historia que me estoy contando es que estás enfadado/a, es así?".', 'Comprometeos a expresar las necesidades de forma positiva: "Me encantaría que pasáramos tiempo juntos" en lugar de "Nunca hacemos nada".', 'Revisad el contrato semanalmente para ver cómo va.'] },
+    { icon: '❓', title: 'La Hora de la Curiosidad', description: 'Reemplazar la ansiedad por la curiosidad sobre la pareja.', steps: ['Dedicad 15 minutos a haceros preguntas abiertas que no tengan que ver con el estado de la relación.', 'Ejemplos: "¿Qué es algo que te ha hecho reír esta semana?", "¿Si pudieras tener un superpoder, cuál sería y por qué?".', 'La única regla es escuchar sin interrumpir y sin relacionar la respuesta con uno mismo.', 'Esto fomenta la conexión genuina y reduce el análisis ansioso.'] },
+    { icon: '⛔', title: 'Pausar la Escalada', description: 'Aprender a identificar cuándo una conversación se está volviendo una espiral de ansiedad y cómo detenerla.', steps: ['Definid una "palabra de seguridad" (ej. "pausa", "semáforo rojo").', 'Cuando uno de los dos la dice, la conversación se detiene inmediatamente, sin excepción.', 'Ambos se toman 20 minutos para calmarse por separado (caminar, respirar, escuchar música).', 'Solo se retoma la conversación cuando ambos se sientan regulados y con la intención de escuchar.'] },
+    { icon: '🎉', title: 'El Banco de los Éxitos', description: 'Crear un registro de las veces que habéis navegado con éxito la ansiedad y habéis fortalecido la relación.', steps: ['Comprad un cuaderno especial para la relación.', 'Después de superar un momento de ansiedad o un conflicto de forma saludable, escribid qué pasó y qué hicisteis bien como equipo.', 'Anotad también gestos de seguridad y cariño que os hayáis ofrecido.', 'Leer este "banco" en momentos de duda refuerza la confianza en vuestra capacidad para estar bien juntos.'] }
+  ],
+  'Ansioso-Desorganizado': [
+    { icon: '🏡', title: 'Construyendo el Refugio Seguro', description: 'La prioridad es crear una base de predictibilidad y seguridad para calmar ambos sistemas nerviosos.', steps: ['El ansioso se enfoca en ser consistente en sus respuestas, evitando la protesta ansiosa (mensajes masivos, llamadas).', 'El desorganizado practica la transparencia, comunicando su necesidad de espacio con una frase pactada: "Necesito entrar en mi cueva un rato, pero no es por ti. Volveré".', 'Estableced un ritual de conexión diario, muy corto y de baja presión (ej. 5 minutos de abrazo en silencio).', 'La consistencia es la clave para que el desorganizado empiece a confiar en la conexión.'] },
+    { icon: '✋', title: 'La Señal de "Stop" Respetuosa', description: 'Dar al desorganizado una herramienta para frenar la intensidad del ansioso sin que se sienta como un rechazo total.', steps: ['Acordad una señal no verbal (ej. levantar la mano con la palma abierta) que signifique "Tu intensidad me está abrumando, necesito que bajes el volumen".', 'Cuando el desorganizado usa la señal, el ansioso se compromete a detenerse, respirar y reformular su petición de forma más suave.', 'El ansioso practica decir: "Ok, lo entiendo. Lo intento de nuevo más despacio".', 'Esto da poder al desorganizado y enseña al ansioso a modular su energía.'] },
+    { icon: '🎭', title: 'Poniendo Nombre a los "Personajes"', description: 'Reconocer las diferentes partes que se activan en cada uno durante un conflicto (el "perseguidor" ansioso, el "fugitivo" asustado del desorganizado, etc.).', steps: ['En un momento de calma, hablad sobre qué partes de vosotros aparecen cuando os sentís activados.', 'Dadle nombres divertidos a esas partes ("el detective ansioso", "el fantasma asustado").', 'Durante un conflicto, podéis decir: "Creo que mi detective está tomando el control" o "Mi fantasma quiere huir".', 'Esto despersonaliza el conflicto y crea una distancia que permite observarlo con más calma.'] },
+    { icon: '🩹', title: 'El Ritual de la Reparación', description: 'El ciclo de ruptura y reparación es clave. Establecer un protocolo claro para después de un conflicto.', steps: ['Tras una discusión, ambos se toman un tiempo pactado para calmarse.', 'La reparación la inicia quien se sienta capaz primero, con una frase simple: "Lamento cómo ha ido eso. ¿Podemos reconectar?".', 'La reconexión no es para seguir discutiendo, sino para restablecer el vínculo (un abrazo, sentarse juntos).', 'La conversación sobre el problema se puede tener más tarde, cuando la conexión sea segura de nuevo.'] },
+    { icon: '🧘', title: 'Anclaje en el Presente Compartido', description: 'Un ejercicio de mindfulness para sacar a ambos de las historias de miedo del pasado (desorganizado) y del futuro (ansioso).', steps: ['Sentaos uno frente al otro y sosteneos las manos.', 'Durante 3 minutos, simplemente notad la sensación del contacto de las manos.', 'Luego, por turnos, describid algo que veis en la habitación en ese momento, de forma neutra ("Veo la lámpara encendida").', 'Este ejercicio os ancla en la seguridad del momento presente y calma el sistema nervioso.'] },
+    { icon: '🌱', title: 'Jardinería de la Confianza', description: 'El ansioso planta "semillas" de confianza y el desorganizado aprende a "regarlas".', steps: ['El ansioso realiza actos de confianza pequeños y medibles, como no preguntar con quién está el desorganizado cuando sale.', 'El desorganizado, al notar esto, ofrece una pequeña "actualización" voluntaria: "¡Hola! Tomando algo con X, te cuento luego".', 'El ansioso agradece esta información sin pedir más detalles.', 'Poco a poco, esto construye un ciclo de confianza mutua en lugar de un ciclo de control y miedo.'] }
+  ],
+  'Evitativo-Evitativo': [
+    { icon: '📅', title: 'La Cita No Negociable', description: 'Romper la rutina de "compañeros de piso" con una conexión intencionada y agendada.', steps: ['Agendad una "cita" de 30 minutos a la semana. Es inamovible.', 'Durante la cita, la única regla es hacer algo juntos que no sea ver una pantalla pasivamente. Puede ser preparar un té especial, escuchar un disco, etc.', 'No hay presión para tener conversaciones profundas. El objetivo es compartir un espacio y un tiempo.', 'La regularidad y la intención son más importantes que la duración.'] },
+    { icon: 'Parallel Play', title: 'Juego en Paralelo para Adultos', description: 'Conectar a través de la proximidad y la actividad compartida, sin la presión de la interacción directa.', steps: ['Elegid una actividad que ambos podáis hacer en la misma habitación, pero de forma individual (leer, dibujar, escuchar música con auriculares).', 'Pasad 30-45 minutos en esta "burbuja compartida".', 'La presencia del otro se vuelve reconfortante en lugar de demandante.', 'Es una forma de intimidad que respeta la necesidad de independencia de ambos.'] },
+    { icon: '❓', title: 'La Pregunta de la Curiosidad', description: 'Una forma estructurada y de baja presión para mostrar interés más allá de la logística diaria.', steps: ['Cada uno escribe 3 preguntas abiertas y no emocionales en papelitos y los mete en un cuenco.', 'Una vez al día, cada uno saca un papel y le hace la pregunta al otro.', 'Ejemplos: "¿Qué es lo más interesante que has aprendido esta semana?", "¿Si pudieras viajar a cualquier época, cuál sería?".', 'La respuesta no debe durar más de 2 minutos. Fomenta el conocimiento mutuo sin sentirse como una entrevista.'] },
+    { icon: '👍', title: 'El Reconocimiento Práctico', description: 'El lenguaje del afecto para los evitativos a menudo es práctico y basado en actos de servicio.', steps: ['Haced un esfuerzo consciente por notar y agradecer los actos de servicio del otro.', 'En lugar de un "te quiero", probad con un "Gracias por encargarte de la basura, valoro mucho que lo hagas".', 'Este tipo de reconocimiento es concreto y menos vulnerable que una declaración emocional directa.', 'Valida la forma en que el otro demuestra su afecto y cuidado.'] },
+    { icon: ' getaway', title: 'Plan de Escape Conjunto', description: 'Usar vuestra habilidad compartida para la planificación y la independencia para un objetivo común.', steps: ['Planificad juntos una escapada o una actividad futura que os entusiasme a ambos.', 'Dedicad tiempo a investigar destinos, actividades, etc. Esto se convierte en un proyecto compartido.', 'El acto de planificar es una forma de conectar que se siente productiva y no puramente emocional.', 'Genera una anticipación positiva y un "nosotros" frente a un objetivo externo.'] },
+    { icon: '💬', title: 'El Informe de "Batería Social"', description: 'Una forma lógica y no emocional de comunicar los niveles de energía para la interacción.', steps: ['Al final del día, cada uno puede comunicar su "nivel de batería social" en un porcentaje.', '"Hoy estoy al 20%, necesito una noche tranquila". O "Estoy al 70%, me apetece charlar un rato".', 'No se juzga el número, solo se informa.', 'Esto permite gestionar las expectativas de interacción de forma clara y sin que nadie se sienta rechazado.'] }
+  ],
+  'Evitativo-Desorganizado': [
+    { icon: '🛡️', title: 'El Escudo y el Ancla', description: 'El evitativo aprende a ser un "escudo" predecible y el desorganizado un "ancla" que no persigue.', steps: ['El evitativo se compromete a no desaparecer sin avisar. Usa una frase clave: "Necesito mi espacio ahora. No es un castigo. Volveré en X tiempo".', 'El desorganizado se compromete a no perseguir durante ese tiempo. En su lugar, practica una técnica de grounding (ej. sentir sus pies en el suelo).', 'Es vital que el evitativo cumpla su palabra y regrese.', 'Esto rompe el ciclo de huida-persecución y empieza a construir una confianza frágil.'] },
+    { icon: '🧱', title: 'Construyendo Ladrillo a Ladrillo', description: 'La confianza se construye con acciones pequeñas, consistentes y predecibles, no con grandes gestos emocionales.', steps: ['Empezad con promesas muy pequeñas y cumplidlas. "Te llamaré a las 5". Y llamar a las 5.', 'Celebrad estos pequeños actos de fiabilidad. "Gracias por llamar cuando dijiste que lo harías. Eso significa mucho para mí".', 'El evitativo aprende que el compromiso no es una trampa mortal.', 'El desorganizado aprende que puede confiar en la palabra del otro, calmando su caos interno.'] },
+    { icon: '🤫', title: 'El Secreto Compartido', description: 'Crear un pequeño mundo de intimidad segura compartiendo algo de baja vulnerabilidad.', steps: ['Cada uno comparte un "secreto" o un pensamiento que no haya contado a mucha gente, pero que no sea profundamente traumático.', 'Puede ser un sueño tonto, una opinión impopular sobre una película, etc.', 'El receptor solo puede decir "Gracias por compartir eso conmigo". No se analiza ni se juzga.', 'Esto crea un pequeño contenedor de confianza que puede ir expandiéndose.'] },
+    { icon: '🎨', title: 'Comunicación No Verbal', description: 'Cuando las palabras son demasiado peligrosas o abrumadoras, usar otros canales.', steps: ['Cread una playlist compartida. Cada uno añade canciones que reflejen su estado de ánimo.', 'Dibujad o escribid en un cuaderno compartido, sin necesidad de que el otro lo vea inmediatamente.', 'Acordad un gesto físico de baja intensidad que signifique "pienso en ti", como un apretón suave en el hombro.', 'Reduce la presión de la comunicación verbal y permite la expresión segura.'] },
+    { icon: '🧘‍♂️', title: 'Regulación en Paralelo', description: 'Aprender a calmarse en presencia del otro, pero sin exigirse interacción.', steps: ['Cuando ambos estéis activados, id a la misma habitación pero a esquinas opuestas.', 'Cada uno practica su propia técnica de regulación (respirar, estirar, etc.) en silencio durante 10 minutos.', 'Saber que el otro está ahí, también intentando calmarse, crea una sensación de "equipo" en la lucha contra el caos.', 'El objetivo no es conectar, sino aprender a no ser una amenaza para el otro en momentos de estrés.'] },
+    { icon: '🚶', title: 'Caminatas de Hombro con Hombro', description: 'La interacción es menos intimidante cuando no es cara a cara.', steps: ['Dad paseos regulares juntos, caminando uno al lado del otro.', 'La conversación no es obligatoria. Podéis hablar del paisaje, de temas neutros o simplemente caminar en silencio.', 'El movimiento físico ayuda a procesar la energía emocional.', 'Esta forma de "intimidad en movimiento" es a menudo más segura para ambos estilos que una conversación sentados en el sofá.'] }
+  ],
+  'Seguro-Seguro': [
+    { icon: '🌱', title: 'El Jardín de la Relación', description: 'Una revisión periódica para cuidar activamente la relación y no darla por sentada.', steps: ['Una vez al mes, dedicad 30 minutos a vuestro "jardín".', 'Cada uno responde a tres preguntas: "¿Qué ha sido un "rayo de sol" para nosotros este mes?", "¿Qué "mala hierba" (pequeña molestia) deberíamos quitar?", "¿Qué "semilla" (nuevo plan o sueño) queremos plantar?".', 'Se trata de un mantenimiento proactivo y positivo.', 'Asegura que la relación siga creciendo y evolucionando.'] },
+    { icon: '🗺️', title: 'El Mapa de los Sueños Compartidos', description: 'Ir más allá del día a día y alinear vuestras aspiraciones a largo plazo.', steps: ['Cread un "mapa del tesoro" o un collage visual de vuestros sueños para los próximos 5 años.', 'Incluid metas individuales, de pareja y familiares (si aplica).', 'Colocadlo en un lugar visible como recordatorio de vuestro proyecto de vida en común.', 'Este ejercicio refuerza el sentimiento de equipo y de propósito compartido.'] },
+    { icon: '🎭', title: 'Intercambio de Roles', description: 'Fomentar la empatía y la comprensión profunda poniéndose en los zapatos del otro.', steps: ['Ante un desacuerdo menor, haced una pausa y representad la situación desde la perspectiva del otro.', 'Intentad argumentar el punto de vista de vuestra pareja con la mayor sinceridad posible.', 'No se trata de estar de acuerdo, sino de demostrar que habéis entendido su perspectiva.', 'Es un ejercicio avanzado de validación que fortalece la conexión emocional.'] },
+    { icon: '🔥', title: 'Manteniendo Viva la Chispa', description: 'Introducir novedad y juego para evitar que la comodidad se convierta en rutina.', steps: ['Cread un "tarro de citas sorpresa". Cada uno escribe 10 ideas para citas (desde algo gratis como un picnic a algo más elaborado).', 'Una vez cada dos semanas, sacad un papelito y comprometeos a hacer lo que ponga.', 'La sorpresa y la novedad activan los mismos circuitos cerebrales que al principio de la relación.', 'Fomenta el juego, la diversión y los nuevos recuerdos compartidos.'] },
+    { icon: '📚', title: 'El Club de Lectura para Dos', description: 'Crecer juntos intelectual y emocionalmente a través de un estímulo compartido.', steps: ['Elegid un libro (de ficción o no ficción) o un documental para experimentar juntos cada mes.', 'Dedicad un tiempo específico para hablar sobre ello: qué os ha gustado, qué os ha hecho pensar, etc.', 'No tiene que ser un análisis académico, sino una excusa para compartir ideas y perspectivas.', 'Crea nuevas capas de intimidad más allá de lo puramente personal.'] },
+    { icon: '🙏', title: 'La Rueda de la Gratitud Específica', description: 'Ir más allá del "gracias" genérico y apreciar las cualidades y acciones concretas del otro.', steps: ['Sentaos frente a frente una vez a la semana.', 'Por turnos, completad la frase: "Algo que he valorado de ti esta semana es... y me ha hecho sentir...".', 'Sed lo más específicos posible. "Valoro que ayer prepararas la cena porque estaba agotado/a, y me hizo sentir muy cuidado/a".', 'Este ritual refuerza positivamente los comportamientos que nutren la relación y profundiza el aprecio mutuo.'] }
+  ],
+  'Seguro-Desorganizado': [
+    { icon: '⚓', title: 'El Ancla y el Barco', description: 'El seguro actúa como un ancla estable mientras el desorganizado navega las tormentas de su emoción.', steps: ['Cuando el desorganizado se sienta activado, el seguro no intenta "arreglarlo", sino que se mantiene presente y calmado. Su frase clave es: "Estoy aquí. No me voy a ir. Respira conmigo".', 'El seguro puede ofrecer anclajes físicos: una mano firme en el hombro, una manta pesada.', 'No se toman las reacciones del desorganizado (ira, miedo) como algo personal, entendiéndolas como una tormenta que pasará.', 'Esta presencia incondicional es el antídoto más poderoso contra el miedo al abandono del desorganizado.'] },
+    { icon: '📖', title: 'Co-creando la Nueva Historia', description: 'Ayudar al desorganizado a reescribir su narrativa interna sobre las relaciones, usando la seguridad del vínculo actual.', steps: ['El desorganizado comparte un miedo o creencia negativa ("Si me acerco mucho, me harás daño").', 'El seguro escucha y luego ofrece una "contra-evidencia" del presente: "Entiendo que sientas eso por tu pasado. En nuestra relación, cuando te has acercado, ¿qué ha pasado? ¿Te he hecho daño?".', 'Juntos, buscan pruebas en su relación actual que desafíen las creencias antiguas.', 'Poco a poco, la evidencia del presente empieza a pesar más que las heridas del pasado.'] },
+    { icon: '🧩', title: 'Poniendo las Piezas en Orden', description: 'El seguro ayuda al desorganizado a entender sus propias reacciones, que a menudo le resultan confusas.', steps: ['Después de un episodio de desregulación (y una vez que ambos estén en calma), el seguro pregunta con curiosidad: "¿Qué crees que activó esa sensación tan fuerte? ¿Te recordó a algo?".', 'El seguro actúa como un espejo amable, ayudando a conectar la reacción presente con posibles ecos del pasado.', 'No se juzga, solo se explora con compasión.', 'Esto ayuda al desorganizado a desarrollar la auto-comprensión y a sentirse menos "loco" o "roto".'] },
+    { icon: '✅', title: 'La Previsibilidad es Seguridad', description: 'El caos interno del desorganizado se calma con la consistencia externa.', steps: ['El seguro se esfuerza por ser extremadamente fiable y predecible en sus rutinas.', 'Si dice "te llamo en 10 minutos", llama exactamente en 10 minutos.', 'Se comunican los cambios de planes con antelación y claridad.', 'Cada promesa cumplida es un ladrillo más en la construcción de un castillo de seguridad para el desorganizado.'] },
+    { icon: '🗣️', title: 'Validación Radical', description: 'Validar la emoción del desorganizado, incluso si su reacción parece desproporcionada.', steps: ['La frase clave del seguro es: "Tiene todo el sentido del mundo que te sientas así, dadas tus experiencias".', 'Esto no significa estar de acuerdo con el comportamiento, sino validar la emoción subyacente.', 'Ej: "Entiendo perfectamente que sientas pánico, aunque en esta situación estemos a salvo".', 'La validación reduce la vergüenza y permite que la emoción se procese en lugar de enquistarse.'] },
+    { icon: '🚧', title: 'Límites Seguros', description: 'El seguro establece límites claros y firmes, pero de forma amorosa, lo que paradójicamente crea más seguridad.', steps: ['El seguro dice: "Te quiero muchísimo, y no voy a permitir que me grites. Podemos hablar cuando estemos más calmados".', 'El límite no es un castigo, sino una protección para la relación y para ambos.', 'Esto le enseña al desorganizado que el amor puede coexistir con los límites, y que no será abandonado por su comportamiento, pero que sí hay reglas para la interacción segura.', 'Un límite claro es más seguro que un caos sin reglas.'] }
+  ],
+  'Desorganizado-Desorganizado': [
+    { icon: '🧘‍♀️', title: 'El Anclaje Mutuo', description: 'La prioridad número uno es aprender a regularse. Este es el ejercicio base e innegociable.', steps: ['Acordad una "palabra de seguridad" (ej. "ancla"). Cuando uno la dice, toda interacción se detiene.', 'Ambos van a espacios separados (o esquinas opuestas de una habitación) y practican una técnica de grounding por 5 minutos (ej. nombrar 5 cosas que ven, 4 que tocan...).', 'No se vuelve a interactuar hasta que ambos sientan sus pies firmes en el suelo.', 'El objetivo no es resolver el problema, sino sobrevivir a la tormenta emocional sin hacerse más daño.'] },
+    { icon: '📝', title: 'El Diario de la Realidad Presente', description: 'Ambos cerebros tienden a ser secuestrados por el pasado. Este ejercicio os trae de vuelta al aquí y ahora.', steps: ['Comprad un cuaderno que será el "Diario de Realidad".', 'Cada día, cada uno escribe una cosa segura y real sobre vuestra relación en el momento presente. Ej: "Hoy me preparaste café", "Hoy nos reímos viendo una serie".', 'Cuando uno de los dos se sienta activado por un miedo, puede leer el diario.', 'Esto ayuda a contrarrestar la narrativa catastrófica con pequeñas dosis de realidad segura.'] },
+    { icon: '🚦', title: 'Comunicación por Semáforo', description: 'Las conversaciones pueden escalar muy rápido. Este sistema ralentiza la comunicación.', steps: ['Antes de hablar de un tema delicado, cada uno dice en qué "color" está: Verde (calmado, puedo hablar), Amarillo (inquieto, necesito ir despacio), Rojo (activado, no puedo hablar de esto ahora).', 'Si uno de los dos está en rojo, el tema se pospone sin discusión.', 'Si uno está en amarillo, la conversación debe ser muy lenta y con pausas.', 'Esto previene las emboscadas emocionales.'] },
+    { icon: '🩹', title: 'El Kit de Primeros Auxilios para la Reparación', description: 'Las rupturas son inevitables. Tener un plan claro para la reparación es vital.', steps: ['Cread un "kit" físico o mental. Puede incluir: una frase de disculpa pactada ("Siento mi parte en lo que acaba de pasar"), una actividad calmante (una canción, un té), un gesto de paz (un abrazo corto).', 'Después de usar la palabra de seguridad y calmarse, el primero que se sienta capaz, ofrece algo del kit.', 'La reparación no es para volver a discutir, es solo para decir "seguimos siendo un equipo a pesar del caos".', 'La rapidez y la predictibilidad de la reparación construyen seguridad.'] },
+    { icon: '🤝', title: 'Micro-Compromisos de Confianza', description: 'La confianza es casi nula. Se construye con las acciones más pequeñas y fiables posibles.', steps: ['Haced promesas diminutas y cumplidlas. "Voy a sacar la basura en 5 minutos". Y hacedlo.', 'Agradeced explícitamente el cumplimiento: "Gracias por hacer lo que dijiste que harías".', 'No hagáis promesas a futuro. El foco está en construir fiabilidad en el plazo de la próxima hora.', 'Cada micro-compromiso cumplido es una gota de agua en un desierto de desconfianza.'] },
+    { icon: '❤️‍🩹', title: 'Celebrando la "Suficiente Bondad"', description: 'El perfeccionismo es un enemigo. El objetivo no es una relación perfecta, sino una "suficientemente buena" y segura.', steps: ['Al final de la semana, compartid un "momento suficientemente bueno" que hayáis tenido.', 'No tiene que ser espectacular. "El miércoles, cuando estábamos en silencio en el sofá, me sentí en paz por un minuto. Eso fue suficientemente bueno para mí".', 'Celebrar estos momentos reduce la presión y os ayuda a ver el valor en la calma, no solo en la intensidad.', 'Cambia el objetivo de la "pasión" o la "fusión" a la "paz compartida".'] }
   ]
-  // Puedes añadir el resto de combinaciones como 'Ansioso-Ansioso', 'Evitativo-Evitativo', 'Seguro-Seguro', etc.
 };
 
 
@@ -231,6 +106,7 @@ const exercisesData: Record<string, Exercise[]> = {
 export class ExercisesService {
   /**
    * Obtiene la lista de ejercicios para una combinación específica de estilos de apego.
+   * La lógica es simétrica: busca tanto "A-B" como "B-A".
    * @param userStyle Estilo de apego del usuario.
    * @param partnerStyle Estilo de apego de la pareja.
    * @returns Un array de ejercicios.
@@ -241,6 +117,7 @@ export class ExercisesService {
 
     // Devuelve los ejercicios para la clave directa (ej. Ansioso-Seguro)
     // o para la clave inversa (ej. Seguro-Ansioso) si la primera no existe.
+    // Si ninguna existe, devuelve un array vacío.
     return exercisesData[key] || exercisesData[reverseKey] || [];
   }
 }
