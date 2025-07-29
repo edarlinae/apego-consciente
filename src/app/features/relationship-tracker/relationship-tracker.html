@@ -17,7 +17,7 @@
           <ng-container *ngFor="let i of [1,2,3,4,5]">
             <input type="radio" [id]="q.id + i" [name]="q.id" [value]="i" [formControlName]="q.id" class="star-radio">
             <label [for]="q.id + i" class="star-label" (click)="setRating(q.id, i)">
-              <span class="heart" [class.selected]="trackerForm.get(q.id)!.value >= i">❤️</span>
+              <span class="heart" [class.selected]="trackerForm.get(q.id)!.value >= i">♡</span>
             </label>
           </ng-container>
         </div>
@@ -55,7 +55,7 @@
             <div *ngFor="let q of questions" class="rating-display">
               <span class="question-text">{{ q.text }}</span>
               <span class="hearts-display">
-                <span *ngFor="let i of [1,2,3,4,5]" class="heart" [class.filled]="entry.ratings[q.id] >= i">❤️</span>
+                <span *ngFor="let i of [1,2,3,4,5]" class="heart" [class.filled]="entry.ratings[q.id] >= i">♡</span>
               </span>
             </div>
           </div>
