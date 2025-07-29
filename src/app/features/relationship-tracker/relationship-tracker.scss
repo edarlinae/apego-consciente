@@ -108,7 +108,7 @@ textarea {
     .heart {
       font-size: 2rem;
       color: #ddd; // Color por defecto (gris)
-      font-weight: normal; // Asegura que el contorno sea fino
+      // font-weight: normal; // Eliminamos esto, ya que la fuente del carácter define si es relleno o contorno
       transition: all 0.2s ease;
     }
 
@@ -121,7 +121,7 @@ textarea {
   // Cuando un corazón está seleccionado (a través de la clase de Angular)
   .heart.selected {
     color: #ff8c6c; // Se tiñe de rojo
-    font-weight: bold; // El corazón se "rellena"
+    // font-weight: bold; // Eliminamos esto, el carácter ya es relleno
   }
 }
 
@@ -171,10 +171,10 @@ textarea {
   .hearts-display .heart {
     font-size: 1.2rem;
     color: #ddd;
-    font-weight: normal; // Corazón de contorno
+    // font-weight: normal; // Eliminamos esto, ya que el carácter es el que define
     &.filled {
       color: #ff8c6c; // Relleno de color
-      font-weight: bold;
+      // font-weight: bold; // Eliminamos esto
     }
   }
 
