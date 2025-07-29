@@ -1,30 +1,18 @@
-import { Component, signal, computed, inject, effect } from '@angular/core';
+import { Component, signal, computed, inject, effect, untracked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Injectable } from '@angular/core';
 
 // --- SERVICIOS Y DATOS ---
-// Importamos el UserService para interactuar con Firestore
 import { UserService } from '../../core/services/user'; 
 
-// Las interfaces y datos que ya teníamos
-export interface Conduct {
-  id: string;
-  text: string;
-}
+// --- INTERFACES Y DATOS (SIN CAMBIOS) ---
+export interface Conduct { id: string; text: string; }
+export interface Tip { conductId: string; texts: string[]; }
+export interface ConductWithTip { conduct: Conduct; tip: Tip | undefined; }
 
-export interface Tip {
-  conductId: string;
-  texts: string[];
-}
-
-export interface ConductWithTip {
-  conduct: Conduct;
-  tip: Tip | undefined;
-}
-
-// --- DATOS COMPLETOS DE RECURSOS (CON TODOS LOS TIPS) ---
 const resourcesData: Record<string, { conducts: Conduct[], tips: Tip[] }> = {
+  // ... Tu objeto resourcesData completo va aquí, no se ha modificado
   'Ansioso': {
     conducts: [
       { id: 'anx1', text: 'Siento una necesidad urgente de contactar a mi pareja si no responde.' },
@@ -39,86 +27,16 @@ const resourcesData: Record<string, { conducts: Conduct[], tips: Tip[] }> = {
       { id: 'anx10', text: 'Me adapto rápidamente a los gustos y preferencias de mi pareja, a veces perdiendo los míos.' },
     ],
     tips: [
-      { 
-        conductId: 'anx1', 
-        texts: [
-          'Practica la "pausa consciente": Antes de actuar, respira hondo 10 veces y pregúntate qué necesitas realmente. ¿Es seguridad o es control?',
-          'Activa tu "sistema de calma": Ten a mano una playlist relajante o el teléfono de un amigo para hablar de otro tema. El objetivo es auto-regularte, no que tu pareja lo haga por ti.',
-          'Reta el pensamiento catastrófico: Escribe tres posibles razones inocentes por las que tu pareja no ha respondido (ej. "está conduciendo", "se quedó sin batería").'
-        ] 
-      },
-      { 
-        conductId: 'anx2', 
-        texts: [
-          'Desarrolla la "narrativa generosa": Asume una intención positiva por parte de tu pareja hasta que se demuestre lo contrario. Quizás necesita espacio para procesar, y no es un rechazo hacia ti.',
-          'Comunica tu necesidad de forma vulnerable: En lugar de acusar, di "Cuando hay silencio, mi mente tiende a asustarse. Me ayudaría mucho saber que todo está bien entre nosotros".',
-          'Diferencia entre "espacio" y "abandono": El espacio es una necesidad sana en cualquier relación. El abandono es tu miedo hablando. Trabaja en verlos como dos cosas distintas.'
-        ]
-      },
-      {
-        conductId: 'anx3',
-        texts: [
-          'Aprende a auto-validarte: Al final del día, escribe tres cosas que hiciste bien o de las que te sientas orgulloso/a, sin importar la opinión de los demás.',
-          'Pide seguridad de forma específica y limitada: En lugar de un "¿me quieres?", prueba con un "Hoy me siento un poco inseguro/a, ¿podemos tener un momento de conexión sin móviles esta noche?".',
-          'Observa y agradece las muestras de seguridad que ya existen: A menudo, la seguridad se muestra en pequeñas acciones diarias. Haz una lista de ellas.'
-        ]
-      },
-      {
-        conductId: 'anx4',
-        texts: [
-          'Crea un "menú de autocuidado": Una lista de actividades que te reconecten contigo mismo/a (leer, pasear, escuchar música) y recurre a ella en momentos de ansiedad.',
-          'Practica el "compartimentalizar": Designa un tiempo específico para pensar en la relación. Fuera de ese tiempo, si tu mente vuelve al tema, dite a ti mismo/a "Ahora no, lo pensaré a las 8pm".',
-          'Invierte en tus propias pasiones: Cuanto más rica sea tu vida fuera de la relación, menos poder tendrá la tensión de pareja para desestabilizarte por completo.'
-        ]
-      },
-      {
-        conductId: 'anx5',
-        texts: [
-          'Practica la "observación realista": Escribe tanto las cualidades que admiras de tu pareja como sus imperfecciones o cosas que te molestan. Nadie es perfecto.',
-          'Introduce un ritmo más lento al principio: Sé consciente de la velocidad a la que compartes información personal o haces planes a futuro. Dale tiempo a la relación para que se desarrolle orgánicamente.',
-          'Pregúntate: "¿Qué sé realmente de esta persona versus lo que he imaginado sobre ella?". Basa tus sentimientos en hechos, no en fantasías.'
-        ]
-      },
-      {
-        conductId: 'anx6',
-        texts: [
-          'Establece un "micro-límite": Empieza por algo pequeño, como decir "No me apetece ver esa película esta noche, ¿podemos elegir otra cosa?".',
-          'Conecta con tus propias necesidades antes de responder: Antes de decir "sí" a algo, haz una pausa y pregúntate: "¿Qué es lo que yo realmente quiero o necesito en esta situación?".',
-          'Recuerda que decir "no" a una petición no es decir "no" a la persona. Los límites sanos son esenciales para una relación equilibrada.'
-        ]
-      },
-      {
-        conductId: 'anx7',
-        texts: [
-          'Fortalece tu red de apoyo: Llama a un amigo o familiar para hablar de algo no relacionado con tu pareja. Recuerda que tu bienestar no depende de una sola persona.',
-          'Crea un "ancla de seguridad interna": Identifica un lugar, un recuerdo o una sensación en tu cuerpo que te haga sentir en calma y practica volver a ella mentalmente cuando sientas miedo.',
-          'Escribe sobre tus fortalezas y resiliencia: Haz una lista de todas las veces que has superado dificultades por tu cuenta. Eres más fuerte de lo que tu miedo te hace creer.'
-        ]
-      },
-      {
-        conductId: 'anx8',
-        texts: [
-          'Designa un "tiempo de no análisis": Dedica 15 minutos al día a pensar en la relación si lo necesitas, pero fuera de ese tiempo, redirige tu atención conscientemente.',
-          'Practica la comunicación directa: En lugar de analizar un gesto, pregunta de forma abierta y curiosa. "He notado que hoy estás más callado/a, ¿está todo bien?".',
-          'Enfócate en el patrón general, no en el detalle aislado: Una sola palabra o gesto no define la relación. Observa las tendencias generales de comportamiento de tu pareja a lo largo del tiempo.'
-        ]
-      },
-      {
-        conductId: 'anx9',
-        texts: [
-          'Explora la raíz de tus celos: ¿Vienen de una experiencia pasada? ¿De una inseguridad personal? Escribir sobre ello puede revelar el verdadero origen.',
-          'Diferencia entre la "amenaza real" y la "amenaza percibida": Pregúntate, "¿Hay pruebas concretas de que algo malo está pasando, o es mi miedo el que está hablando?".',
-          'Invierte en tu propia vida social: Tener tus propios amigos y actividades reduce la sensación de que tu pareja es tu única fuente de conexión y diversión.'
-        ]
-      },
-      {
-        conductId: 'anx10',
-        texts: [
-          'Realiza una "cita contigo mismo/a": Haz una actividad que a ti te encante, sin importar si a tu pareja le gusta o no. Reconecta con tu identidad.',
-          'Practica expresar una preferencia diferente: Empieza con algo pequeño, como la comida o una película. "A mí en realidad me apetece más la comida italiana esta noche".',
-          'Haz una lista de tus valores y pasiones no negociables: Ten claro qué es lo que te define y asegúrate de que esas cosas sigan teniendo espacio en tu vida.'
-        ]
-      }
+      { conductId: 'anx1', texts: ['Practica la "pausa consciente": Antes de actuar, respira hondo 10 veces y pregúntate qué necesitas realmente. ¿Es seguridad o es control?','Activa tu "sistema de calma": Ten a mano una playlist relajante o el teléfono de un amigo para hablar de otro tema. El objetivo es auto-regularte, no que tu pareja lo haga por ti.','Reta el pensamiento catastrófico: Escribe tres posibles razones inocentes por las que tu pareja no ha respondido (ej. "está conduciendo", "se quedó sin batería").'] },
+      { conductId: 'anx2', texts: ['Desarrolla la "narrativa generosa": Asume una intención positiva por parte de tu pareja hasta que se demuestre lo contrario. Quizás necesita espacio para procesar, y no es un rechazo hacia ti.','Comunica tu necesidad de forma vulnerable: En lugar de acusar, di "Cuando hay silencio, mi mente tiende a asustarse. Me ayudaría mucho saber que todo está bien entre nosotros".','Diferencia entre "espacio" y "abandono": El espacio es una necesidad sana en cualquier relación. El abandono es tu miedo hablando. Trabaja en verlos como dos cosas distintas.'] },
+      { conductId: 'anx3', texts: ['Aprende a auto-validarte: Al final del día, escribe tres cosas que hiciste bien o de las que te sientas orgulloso/a, sin importar la opinión de los demás.','Pide seguridad de forma específica y limitada: En lugar de un "¿me quieres?", prueba con un "Hoy me siento un poco inseguro/a, ¿podemos tener un momento de conexión sin móviles esta noche?".','Observa y agradece las muestras de seguridad que ya existen: A menudo, la seguridad se muestra en pequeñas acciones diarias. Haz una lista de ellas.'] },
+      { conductId: 'anx4', texts: ['Crea un "menú de autocuidado": Una lista de actividades que te reconecten contigo mismo/a (leer, pasear, escuchar música) y recurre a ella en momentos de ansiedad.','Practica el "compartimentalizar": Designa un tiempo específico para pensar en la relación. Fuera de ese tiempo, si tu mente vuelve al tema, dite a ti mismo/a "Ahora no, lo pensaré a las 8pm".','Invierte en tus propias pasiones: Cuanto más rica sea tu vida fuera de la relación, menos poder tendrá la tensión de pareja para desestabilizarte por completo.'] },
+      { conductId: 'anx5', texts: ['Practica la "observación realista": Escribe tanto las cualidades que admiras de tu pareja como sus imperfecciones o cosas que te molestan. Nadie es perfecto.','Introduce un ritmo más lento al principio: Sé consciente de la velocidad a la que compartes información personal o haces planes a futuro. Dale tiempo a la relación para que se desarrolle orgánicamente.','Pregúntate: "¿Qué sé realmente de esta persona versus lo que he imaginado sobre ella?". Basa tus sentimientos en hechos, no en fantasías.'] },
+      { conductId: 'anx6', texts: ['Establece un "micro-límite": Empieza por algo pequeño, como decir "No me apetece ver esa película esta noche, ¿podemos elegir otra cosa?".','Conecta con tus propias necesidades antes de responder: Antes de decir "sí" a algo, haz una pausa y pregúntate: "¿Qué es lo que yo realmente quiero o necesito en esta situación?".','Recuerda que decir "no" a una petición no es decir "no" a la persona. Los límites sanos son esenciales para una relación equilibrada.'] },
+      { conductId: 'anx7', texts: ['Fortalece tu red de apoyo: Llama a un amigo o familiar para hablar de algo no relacionado con tu pareja. Recuerda que tu bienestar no depende de una sola persona.','Crea un "ancla de seguridad interna": Identifica un lugar, un recuerdo o una sensación en tu cuerpo que te haga sentir en calma y practica volver a ella mentalmente cuando sientas miedo.','Escribe sobre tus fortalezas y resiliencia: Haz una lista de todas las veces que has superado dificultades por tu cuenta. Eres más fuerte de lo que tu miedo te hace creer.'] },
+      { conductId: 'anx8', texts: ['Designa un "tiempo de no análisis": Dedica 15 minutos al día a pensar en la relación si lo necesitas, pero fuera de ese tiempo, redirige tu atención conscientemente.','Practica la comunicación directa: En lugar de analizar un gesto, pregunta de forma abierta y curiosa. "He notado que hoy estás más callado/a, ¿está todo bien?".','Enfócate en el patrón general, no en el detalle aislado: Una sola palabra o gesto no define la relación. Observa las tendencias generales de comportamiento de tu pareja a lo largo del tiempo.'] },
+      { conductId: 'anx9', texts: ['Explora la raíz de tus celos: ¿Vienen de una experiencia pasada? ¿De una inseguridad personal? Escribir sobre ello puede revelar el verdadero origen.','Diferencia entre la "amenaza real" y la "amenaza percibida": Pregúntate, "¿Hay pruebas concretas de que algo malo está pasando, o es mi miedo el que está hablando?".','Invierte en tu propia vida social: Tener tus propios amigos y actividades reduce la sensación de que tu pareja es tu única fuente de conexión y diversión.'] },
+      { conductId: 'anx10', texts: ['Realiza una "cita contigo mismo/a": Haz una actividad que a ti te encante, sin importar si a tu pareja le gusta o no. Reconecta con tu identidad.','Practica expresar una preferencia diferente: Empieza con algo pequeño, como la comida o una película. "A mí en realidad me apetece más la comida italiana esta noche".','Haz una lista de tus valores y pasiones no negociables: Ten claro qué es lo que te define y asegúrate de que esas cosas sigan teniendo espacio en tu vida.'] }
     ]
   },
   'Evitativo': {
@@ -214,7 +132,7 @@ export class ResourcesService {
 }
 
 
-// --- COMPONENTE DE RECURSOS (LÓGICA ACTUALIZADA) ---
+// --- COMPONENTE DE RECURSOS (LÓGICA DE PERSISTENCIA CORREGIDA) ---
 
 @Component({
   selector: 'app-resources',
@@ -229,11 +147,10 @@ export class ResourcesComponent {
   private userService = inject(UserService);
 
   // --- SIGNALS PARA EL ESTADO DEL COMPONENTE ---
-  userAttachmentStyle = signal<string | null>(null);
-  selectedConductIds = signal<Set<string>>(new Set());
+  public isLoading = signal(true); // NUEVO: Signal para gestionar el estado de carga
+  public userAttachmentStyle = signal<string | null>(null);
+  public selectedConductIds = signal<Set<string>>(new Set());
   
-  // Flag para evitar el guardado inicial al cargar los datos
-  private isInitialized = false;
   private saveDebounceTimer: any;
 
   // --- COMPUTED SIGNALS (SIN CAMBIOS) ---
@@ -252,45 +169,50 @@ export class ResourcesComponent {
   });
 
   constructor() {
-    // --- EFFECT 1: Cargar datos del perfil del usuario ---
+    // --- EFECTO 1: Carga inicial de datos ---
     // Se ejecuta cuando el perfil del usuario está disponible o cambia.
     effect(() => {
       const userProfile = this.userService.profile();
+      
+      // Solo procede si tenemos un perfil válido
       if (userProfile) {
-        // Obtenemos el estilo de apego del perfil para mostrar los recursos correctos
-        this.userAttachmentStyle.set(userProfile.testResult?.style || null);
+        // Usamos untracked para asegurar que estas escrituras no causen
+        // que este mismo effect se vuelva a ejecutar en un bucle.
+        untracked(() => {
+          this.userAttachmentStyle.set(userProfile.testResult?.style || null);
+          const savedConducts = new Set(userProfile.selectedConducts || []);
+          this.selectedConductIds.set(savedConducts);
+        });
         
-        // Obtenemos las conductas ya guardadas y actualizamos nuestro signal local
-        const savedConducts = new Set(userProfile.selectedConducts || []);
-        this.selectedConductIds.set(savedConducts);
-
-        // Marcamos como inicializado para que el siguiente effect pueda empezar a guardar
-        // Se usa un timeout breve para asegurar que el primer guardado no se dispare
-        setTimeout(() => this.isInitialized = true, 100);
+        // Una vez que los datos iniciales se han cargado, desactivamos el estado de carga.
+        this.isLoading.set(false);
       }
-    });
+    }, { allowSignalWrites: true }); // Opción necesaria porque escribimos en signals
 
-    // --- EFFECT 2: Guardar cambios en la base de datos ---
+    // --- EFECTO 2: Guardado automático y eficiente de datos ---
     // Se ejecuta cada vez que el usuario marca o desmarca un checkbox.
     effect(() => {
-      // No hacemos nada si el componente no se ha inicializado con los datos de la BD
-      if (!this.isInitialized) return;
-
-      // Obtenemos la lista actual de IDs
-      const conductIdsToSave = Array.from(this.selectedConductIds());
-
-      // Cancelamos cualquier guardado anterior que estuviera en espera
+      // CAPTURAMOS LA DEPENDENCIA: Este efecto se re-ejecutará si 'selectedConductIds' cambia.
+      const ids = this.selectedConductIds();
+      
+      // GUARDIA DE SEGURIDAD: No hacemos nada si estamos en el proceso de carga inicial.
+      if (this.isLoading()) {
+        return;
+      }
+      
+      // Cancelamos cualquier guardado anterior que estuviera en espera.
       clearTimeout(this.saveDebounceTimer);
 
-      // Programamos un nuevo guardado para dentro de 750ms
+      // Programamos un nuevo guardado para dentro de 750ms.
       this.saveDebounceTimer = setTimeout(() => {
-        console.log('Guardando conductas seleccionadas en Firestore:', conductIdsToSave);
-        this.userService.updateSelectedConducts(conductIdsToSave);
+        console.log('Guardando conductas seleccionadas en Firestore:', Array.from(ids));
+        // Llamamos al servicio para que actualice los datos en la base de datos.
+        this.userService.updateSelectedConducts(Array.from(ids));
       }, 750);
     });
   }
 
-  // --- MÉTODO LLAMADO DESDE EL HTML (SIN CAMBIOS EN SU LÓGICA) ---
+  // --- MÉTODO LLAMADO DESDE EL HTML (SIN CAMBIOS) ---
   // Solo se encarga de actualizar el estado local. El 'effect' se encarga de guardar.
   onConductChange(conductId: string, isChecked: boolean): void {
     this.selectedConductIds.update(currentSet => {
