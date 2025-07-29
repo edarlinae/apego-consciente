@@ -1,10 +1,13 @@
-import { Component, OnInit, signal, computed, inject } from '@angular/core';
+import { Component, signal, computed, inject, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Injectable } from '@angular/core';
 
-// --- INTERFACES Y TIPOS DE DATOS ---
+// --- SERVICIOS Y DATOS ---
+// Importamos el UserService para interactuar con Firestore
+import { UserService } from '../../core/services/user'; 
 
+// Las interfaces y datos que ya teníamos
 export interface Conduct {
   id: string;
   text: string;
@@ -15,15 +18,12 @@ export interface Tip {
   texts: string[];
 }
 
-// Un tipo para la estructura de datos combinada que usaremos en la plantilla
 export interface ConductWithTip {
   conduct: Conduct;
   tip: Tip | undefined;
 }
 
-
-// --- DATOS COMPLETOS DE RECURSOS ---
-
+// --- DATOS COMPLETOS DE RECURSOS (CON TODOS LOS TIPS) ---
 const resourcesData: Record<string, { conducts: Conduct[], tips: Tip[] }> = {
   'Ansioso': {
     conducts: [
@@ -201,25 +201,20 @@ const resourcesData: Record<string, { conducts: Conduct[], tips: Tip[] }> = {
   }
 };
 
-
-// --- SERVICIO DE RECURSOS ---
-
 @Injectable({
   providedIn: 'root'
 })
 export class ResourcesService {
-  
   getConductsForStyle(style: string): Conduct[] {
     return resourcesData[style]?.conducts || [];
   }
-
   getTipsForStyle(style: string): Tip[] {
     return resourcesData[style]?.tips || [];
   }
 }
 
 
-// --- COMPONENTE DE RECURSOS (LA CLASE CORREGIDA) ---
+// --- COMPONENTE DE RECURSOS (LÓGICA ACTUALIZADA) ---
 
 @Component({
   selector: 'app-resources',
@@ -228,29 +223,26 @@ export class ResourcesService {
   templateUrl: './resources.html',
   styleUrls: ['./resources.scss']
 })
-export class ResourcesComponent implements OnInit {
+export class ResourcesComponent {
+  // --- INYECCIÓN DE SERVICIOS ---
   private resourcesService = inject(ResourcesService);
-  // NOTA: Deberías tener un servicio para obtener los datos del usuario.
-  // private userService = inject(UserService); 
+  private userService = inject(UserService);
 
-  // Almacena el estilo de apego del usuario.
-  // **IMPORTANTE**: Por ahora, está fijado a 'Ansioso' para que puedas ver cómo funciona.
-  // En tu aplicación real, deberías obtener este valor desde un servicio de usuario.
-  userAttachmentStyle = signal<string | null>('Ansioso');
-
-  // Almacena los IDs de las conductas que el usuario ha seleccionado.
+  // --- SIGNALS PARA EL ESTADO DEL COMPONENTE ---
+  userAttachmentStyle = signal<string | null>(null);
   selectedConductIds = signal<Set<string>>(new Set());
+  
+  // Flag para evitar el guardado inicial al cargar los datos
+  private isInitialized = false;
+  private saveDebounceTimer: any;
 
-  // Un "computed signal" que prepara los datos para mostrar en la plantilla.
-  // Combina las conductas con sus respectivos tips.
+  // --- COMPUTED SIGNALS (SIN CAMBIOS) ---
   conductsWithTips = computed<ConductWithTip[]>(() => {
     const style = this.userAttachmentStyle();
-    if (!style) {
-      return [];
-    }
+    if (!style) return [];
+    
     const conducts = this.resourcesService.getConductsForStyle(style);
     const tips = this.resourcesService.getTipsForStyle(style);
-
     const tipsMap = new Map(tips.map(tip => [tip.conductId, tip]));
 
     return conducts.map(conduct => ({
@@ -259,24 +251,47 @@ export class ResourcesComponent implements OnInit {
     }));
   });
 
-  ngOnInit(): void {
-    // Aquí es donde deberías obtener el estilo de apego del usuario real.
-    // Por ejemplo, si tuvieras un servicio de usuario (userService):
-    // this.userService.currentUser.subscribe(user => {
-    //   if (user && user.attachmentStyle) {
-    //     this.userAttachmentStyle.set(user.attachmentStyle);
-    //   } else {
-    //     this.userAttachmentStyle.set(null);
-    //   }
-    // });
+  constructor() {
+    // --- EFFECT 1: Cargar datos del perfil del usuario ---
+    // Se ejecuta cuando el perfil del usuario está disponible o cambia.
+    effect(() => {
+      const userProfile = this.userService.profile();
+      if (userProfile) {
+        // Obtenemos el estilo de apego del perfil para mostrar los recursos correctos
+        this.userAttachmentStyle.set(userProfile.testResult?.style || null);
+        
+        // Obtenemos las conductas ya guardadas y actualizamos nuestro signal local
+        const savedConducts = new Set(userProfile.selectedConducts || []);
+        this.selectedConductIds.set(savedConducts);
+
+        // Marcamos como inicializado para que el siguiente effect pueda empezar a guardar
+        // Se usa un timeout breve para asegurar que el primer guardado no se dispare
+        setTimeout(() => this.isInitialized = true, 100);
+      }
+    });
+
+    // --- EFFECT 2: Guardar cambios en la base de datos ---
+    // Se ejecuta cada vez que el usuario marca o desmarca un checkbox.
+    effect(() => {
+      // No hacemos nada si el componente no se ha inicializado con los datos de la BD
+      if (!this.isInitialized) return;
+
+      // Obtenemos la lista actual de IDs
+      const conductIdsToSave = Array.from(this.selectedConductIds());
+
+      // Cancelamos cualquier guardado anterior que estuviera en espera
+      clearTimeout(this.saveDebounceTimer);
+
+      // Programamos un nuevo guardado para dentro de 750ms
+      this.saveDebounceTimer = setTimeout(() => {
+        console.log('Guardando conductas seleccionadas en Firestore:', conductIdsToSave);
+        this.userService.updateSelectedConducts(conductIdsToSave);
+      }, 750);
+    });
   }
 
-  /**
-   * Maneja el evento de cambio de los checkboxes en la plantilla.
-   * Añade o elimina un ID de conducta del conjunto de selección.
-   * @param conductId El ID de la conducta que cambió.
-   * @param isChecked El nuevo estado del checkbox.
-   */
+  // --- MÉTODO LLAMADO DESDE EL HTML (SIN CAMBIOS EN SU LÓGICA) ---
+  // Solo se encarga de actualizar el estado local. El 'effect' se encarga de guardar.
   onConductChange(conductId: string, isChecked: boolean): void {
     this.selectedConductIds.update(currentSet => {
       const newSet = new Set(currentSet);
