@@ -55,6 +55,28 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+   {
+        path: 'ejercicios',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./features/exercises/exercises').then(
+            (c) => c.ExercisesComponent
+          ),
+      },
+      // --- NUEVA RUTA PARA EL PLANIFICADOR ---
+      {
+        path: 'planificador',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./features/planner/planner').then(
+            (c) => c.PlannerComponent
+          ),
+      },
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
   {
     // El comodín ahora también redirige a la página de inicio
     path: '**',
